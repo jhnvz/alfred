@@ -25,10 +25,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec-rails', '~> 2.0'
   gem.add_development_dependency 'batman-rails'
 
-  if RUBY_VERSION < '1.9.3'
-    gem.add_dependency 'rails', '>= 3.2.0', '< 4.0.0'
-  else
+  if RUBY_VERSION > '1.9.2'
     gem.add_dependency 'rails', '>= 3.2.0'
+  else
+    gem.add_dependency 'rails', '>= 3.2.0', '< 4.0.0'
   end
 
   if File.exists?('UPGRADING')
