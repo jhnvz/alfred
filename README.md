@@ -7,7 +7,7 @@ Robin Rails helps Batman fighting crime.
 How it works
 ------------
 
-Robin creates fixture files of your api responses so you can use them in your javascript tests.
+Robin creates fixture files of your api responses so you can use them in your tests. Ideal if your app's client is build with a javascript framework and you want to test responses under several conditions.
 
 Resources
 ------------
@@ -20,10 +20,14 @@ Installation
 1. Add `gem 'robin_rails', '~> 1.0.0'` to your Gemfile.
 1. Run `bundle install`.
 
-Setting up scenario's
+Defining scenario's
 ------------
 
+For example:
+
 ```ruby
+# spec/robins/api/v1/posts_controller.rb
+
 Robin.define do
   robin 'update post by manager' do
     setup do
@@ -31,10 +35,11 @@ Robin.define do
       Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
     end
 
-    patch 'api/v1/posts#update', :id => 1, :post => { :title => 'Robin rocks!' }
+    patch 'api/v1/posts#update', :format => :json, :id => 1, :post => { :title => 'Robin rocks!' }
   end
 end
 ```
+Will create `spec/fixtures/api/v1/posts/update/update_by_manager.json`
 
 Supported Ruby Versions
 ------------
