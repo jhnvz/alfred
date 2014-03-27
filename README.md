@@ -25,13 +25,13 @@ Setting up scenario's
 
 ```ruby
 Robin.define do
-  robin 'post and user with manager permissions' do
+  robin 'update post by manager' do
     setup do
-      Company.create(:name => 'Some Company')
-      User.create(:name => 'John Doe')
+      User.create(:name => 'John Doe', :permissions => { :manager => true })
+      Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
     end
-    
-    get 'api/v1/sessions.json'
+
+    get 'api/v1/posts#update', :id => 1
   end
 end
 ```
