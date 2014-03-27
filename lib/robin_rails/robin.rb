@@ -21,6 +21,10 @@ module RobinRails
       @name = name
     end
 
+    def folder
+      "#{controller}/#{action}"
+    end
+
     ##
     # Runs the example
     #
