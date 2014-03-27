@@ -7,7 +7,7 @@ Robin Rails helps Batman fighting crime.
 How it works
 ------------
 
-Robin Rails helps Batman fighting crime.
+Robin creates fixture files of your api responses so you can use them in your javascript tests.
 
 Resources
 ------------
