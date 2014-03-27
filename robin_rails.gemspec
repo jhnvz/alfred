@@ -1,0 +1,36 @@
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'robin_rails/version'
+
+Gem::Specification.new do |gem|
+  gem.name          = "robin_rails"
+  gem.version       = RobinRails::VERSION
+  gem.authors       = ['Johan van Zonneveld', 'Arjen Oosterkamp']
+  gem.email         = ['johan@vzonneveld.nl', 'mail@arjen.me']
+  gem.homepage      = 'https://github.com/jhnvz/robin_rails.git'
+  gem.summary       = %q{Helps Batman fighting crime}
+  gem.description   = %q{Helps Batman fighting crime}
+  gem.license       = 'MIT'
+
+  gem.files         = `git ls-files`.split($/)
+  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
+  gem.require_paths = ['lib']
+
+  gem.add_development_dependency 'bundler', '>= 1.0.0'
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'rspec', '>= 2.3'
+  gem.add_development_dependency 'rspec-rails', '~> 2.0'
+  gem.add_development_dependency 'batman-rails'
+
+  if RUBY_VERSION < '1.9.3'
+    gem.add_dependency 'rails', '>= 3.2.0', '< 4.0.0'
+  else
+    gem.add_dependency 'rails', '>= 3.2.0'
+  end
+
+  if File.exists?('UPGRADING')
+    gem.post_install_message = File.read("UPGRADING")
+  end
+end
