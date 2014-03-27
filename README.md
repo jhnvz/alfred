@@ -14,6 +14,7 @@ Resources
 
 - [Installation](#installation)
 - [Defining scenario's](#defining-scenarios)
+- [Configuration](#configuration)
 - [Guard](#guard)
 
 Installation
