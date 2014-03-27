@@ -15,6 +15,7 @@ Resources
 - [Installation](#installation)
 - [Defining scenario's](#defining-scenarios)
 - [Configuration](#configuration)
+- [Javascript testing](#javascript-testing)
 - [Guard](#guard)
 
 Installation
@@ -48,6 +49,11 @@ Configuration
 ------------
 
 Configuration instructions
+
+Javascript testing
+------------
+
+Javascript testing instructions
 
 Guard
 ------------
