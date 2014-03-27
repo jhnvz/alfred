@@ -5,7 +5,8 @@ Coveralls.wear!
 
 ## Rspec
 
-require 'rspec/rails'
+require 'rspec'
+require 'rspec/autorun'
 
 ## Load robin_rails
 
