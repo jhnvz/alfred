@@ -65,7 +65,9 @@ module RobinRails
       definition.action     = action
       definition.params     = params
 
-      definition.identifier = "#{definition.name.underscore}/#{method}/#{controller}/#{action}"
+      name = definition.name.downcase.gsub(' ', '_')
+
+      definition.identifier = "#{name}/#{method}/#{controller}/#{action}"
     end
 
   end # RobinProxy

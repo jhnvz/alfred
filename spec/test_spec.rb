@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'test' do
 
   before do
+
     RobinRails.define do
       robin 'update post by manager' do
         setup do
@@ -13,10 +14,11 @@ describe 'test' do
         get 'api/v1/posts#update', :id => 1
       end
     end
+
   end
 
   it 'should' do
-    raise RobinRails.registry.items.inspect
+    RobinRails.registry.items.values.first.inspect
   end
 
 end
