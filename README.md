@@ -31,7 +31,7 @@ Robin.define do
       Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
     end
 
-    get 'api/v1/posts#update', :id => 1
+    patch 'api/v1/posts#update', :id => 1
   end
 end
 ```
