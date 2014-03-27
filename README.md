@@ -13,6 +13,8 @@ Resources
 ------------
 
 - [Installation](#installation)
+- [Defining scenario's](#defining-scenarios)
+- [Guard](#guard)
 
 Installation
 ------------
@@ -40,6 +42,16 @@ Robin.define do
 end
 ```
 Will create `spec/fixtures/api/v1/posts/update/update_by_manager.json`
+
+Configuration
+------------
+
+Configuration instructions
+
+Guard
+------------
+
+Here goes the instruction to setup Robin with Guard.
 
 Supported Ruby Versions
 ------------
