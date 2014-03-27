@@ -26,36 +26,12 @@ Setting up scenario's
 ```ruby
 Robin.define do
   robin 'post and user with manager permissions' do
-    serializer PostSerializer
-
-    scope do
-      User.create(
-        :name        => 'John Doe',
-        :email       => 'john@doe.com'
-        :permissions => {
-          :manage_posts => true
-        }
-      )
+    setup do
+      Company.create(:name => 'Some Company')
+      User.create(:name => 'John Doe')
     end
-
-    object do
-      [
-        Post.create(
-          :title => 'Some title',
-          :body  => 'Robin is awesome!'
-        ),
-        Post.create(
-          :title => 'Some title',
-          :body  => 'Robin is stupid!'
-        )
-      ]
-    end
-
-    meta_key :some_key
-
-    meta do
-      total 2
-    end
+    
+    get 'api/v1/sessions.json'
   end
 end
 ```
