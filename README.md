@@ -1,6 +1,6 @@
 ## Robin Rails
 
-[![Gem Version](https://badge.fury.io/rb/robin_rails1.png)](http://badge.fury.io/rb/robin_rails1) [![Build Status](https://secure.travis-ci.org/jhnvz/robin_rails1.png?branch=master)](http://travis-ci.org/jhnvz/robin_rails1) [![Coverage Status](https://coveralls.io/repos/jhnvz/robin_rails1/badge.png?branch=master)](https://coveralls.io/r/jhnvz/robin_rails1) [![Code Climate](https://codeclimate.com/github/jhnvz/robin_rails1.png)](https://codeclimate.com/github/jhnvz/robin_rails1) [![Dependency Status](https://gemnasium.com/jhnvz/robin_rails1.png)](https://gemnasium.com/jhnvz/robin_rails1)
+[![Gem Version](https://badge.fury.io/rb/robin_rails.png)](http://badge.fury.io/rb/robin_rails) [![Build Status](https://secure.travis-ci.org/jhnvz/robin_rails.png?branch=master)](http://travis-ci.org/jhnvz/robin_rails) [![Coverage Status](https://coveralls.io/repos/jhnvz/robin_rails/badge.png?branch=master)](https://coveralls.io/r/jhnvz/robin_rails) [![Code Climate](https://codeclimate.com/github/jhnvz/robin_rails.png)](https://codeclimate.com/github/jhnvz/robin_rails) [![Dependency Status](https://gemnasium.com/jhnvz/robin_rails.png)](https://gemnasium.com/jhnvz/robin_rails)
 
 Robin Rails helps Batman fighting crime.
 
@@ -17,7 +17,7 @@ Resources
 Installation
 ------------
 
-1. Add `gem 'robin_rails1', '~> 1.0.0'` to your Gemfile.
+1. Add `gem 'robin_rails', '~> 1.0.0'` to your Gemfile.
 1. Run `bundle install`.
 
 Setting up scenario's
@@ -60,5 +60,4 @@ Copyright
 ------------
 
 Copyright (c) 2014 Johan van Zonneveld. See LICENSE for details.
-
 
