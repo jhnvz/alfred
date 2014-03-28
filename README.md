@@ -39,7 +39,13 @@ Robin.define do
       Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
     end
 
-    patch 'api/v1/posts#update', :format => :json, :id => 1, :post => { :title => 'Robin rocks!' }
+    patch 'api/v1/posts#update', {
+      :format => :json, 
+      :id     => 1, 
+      :post   => { 
+        :title => 'Robin rocks!' 
+      }
+    }
   end
 end
 ```
