@@ -4,7 +4,7 @@ require 'robin_rails/registry'
 require 'robin_rails/definition'
 require 'robin_rails/robin'
 require 'robin_rails/robin_proxy'
-require 'robin_rails/response'
+require 'robin_rails/request'
 require 'active_support'
 require 'database_cleaner'
 
