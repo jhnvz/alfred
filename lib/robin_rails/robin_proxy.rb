@@ -25,19 +25,35 @@ module RobinRails
     end
 
     ##
+    # Set the controller to test.
+    #
+    # === Params
+    #
+    # [controller (ActionController::Base)] the controller to test
+    #
+    # === Example
+    #
+    # controller(ActionController::Base)
+    #
+    def controller(controller)
+      definition.controller = controller
+    end
+
+    ##
     # Respond to request methods
     #
     # === Examples
     #
-    # post 'posts#create', :post => { :title => 'Some title' }
-    # get  'posts#show', :id => 1
+    # post :create, :post => { :title => 'Some title' }
+    # get  :show, :id => 1
     #
     [
       :get,
       :post,
       :patch,
       :put,
-      :delete
+      :delete,
+      :head
     ].each do |method|
       define_method(method) do |*args|
         setup_request_data(method, *args)
@@ -50,24 +66,17 @@ module RobinRails
     # === Params
     #
     # [method (Sym)] request method
-    # [controller_and_action (String)] controller and action
+    # [action (Sym)] controller and action
     # [params (Hash)] request params
     #
     # === Example
     #
-    # setup_request(:get, 'posts#show', :id => 1)
+    # setup_request(:get, :show, :id => 1)
     #
-    def setup_request_data(method, controller_and_action, params={})
-      controller, action = controller_and_action.split('#')
-
-      definition.method     = method
-      definition.controller = controller
-      definition.action     = action
-      definition.params     = params
-
-      name = definition.name.downcase.gsub(' ', '_')
-
-      definition.identifier = "#{name}/#{method}/#{controller}/#{action}"
+    def setup_request_data(method, action, params={})
+      definition.method = method
+      definition.action = action
+      definition.params = params
     end
 
   end # RobinProxy

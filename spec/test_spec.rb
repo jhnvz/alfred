@@ -1,24 +1,28 @@
 require 'spec_helper'
 
+
 describe 'test' do
 
   before do
 
     RobinRails.define do
-      robin 'update post by manager' do
+
+      robin 'update user by manager' do
+        controller Api::V1::UsersController
+
         setup do
-          User.create(:name => 'John Doe', :permissions => { :manager => true })
-          Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
+          User.create(:name => 'John Doe', :email => 'johan@vzonneveld.nl')
         end
 
-        get 'api/v1/posts#update', :id => 1
+        get :index
       end
     end
 
   end
 
   it 'should' do
-    RobinRails.registry.items.values.first.inspect
+    # raise RobinRails::Response.new.methods.inspect
+    RobinRails.registry.items.values.first.run
   end
 
 end

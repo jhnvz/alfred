@@ -39,6 +39,7 @@ module RobinRails
         robin = Robin.new(name)
         proxy = RobinProxy.new(robin)
         proxy.instance_eval(&block) if block_given?
+        robin.set_identifier
 
         RobinRails.registry.register(robin.identifier, robin)
       end
