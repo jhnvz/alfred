@@ -1,13 +1,15 @@
 module RobinRails
-  class Response < ActionController::TestCase
+  class Request < ActionController::TestCase
 
     ##
     # Runs setup block before it runs the controller action.
     #
+    # [block (Block)] the block to execute
+    #
     # === Example
     #
-    # response = RobinRails::Response.new('test')
-    # response.setup do
+    # request = RobinRails::Request.new('test')
+    # request.setup do
     #   User.create(:name => 'John Doe')
     # end
     #
@@ -20,14 +22,18 @@ module RobinRails
     ##
     # Sets the controller instance to test.
     #
+    # === Params
+    #
+    # [controller_instance (ActionController::Base#new)] the controller to test
+    #
     # === Example
     #
-    # response = RobinRails::Response.new('test')
-    # response.set_controller(Api::V1::UsersController.new)
+    # request = RobinRails::Request.new('test')
+    # request.set_controller(Api::V1::UsersController.new)
     #
     def set_controller(controller_instance)
       @controller = controller_instance
     end
 
-  end # Response
+  end # Request
 end # RobinRails

@@ -26,6 +26,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'batman-rails'
   gem.add_development_dependency 'sqlite3'
 
+  gem.add_dependency 'database_cleaner'
+
   if RUBY_VERSION > '1.9.2'
     gem.add_dependency 'rails', '>= 3.2.0'
   else

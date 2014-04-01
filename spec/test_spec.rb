@@ -14,14 +14,13 @@ describe 'test' do
           User.create(:name => 'John Doe', :email => 'johan@vzonneveld.nl')
         end
 
-        get :index
+        get :index, :format => :json
       end
     end
 
   end
 
   it 'should' do
-    # raise RobinRails::Response.new.methods.inspect
     RobinRails.registry.items.values.first.run
   end
 
