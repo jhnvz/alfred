@@ -1,3 +1,9 @@
+------------
+**This repository is still under development**
+
+------------
+
+
 ## Robin Rails
 
 [![Gem Version](https://badge.fury.io/rb/robin_rails.png)](http://badge.fury.io/rb/robin_rails) [![Build Status](https://secure.travis-ci.org/jhnvz/robin_rails.png?branch=master)](http://travis-ci.org/jhnvz/robin_rails) [![Coverage Status](https://coveralls.io/repos/jhnvz/robin_rails/badge.png?branch=master)](https://coveralls.io/r/jhnvz/robin_rails) [![Code Climate](https://codeclimate.com/github/jhnvz/robin_rails.png)](https://codeclimate.com/github/jhnvz/robin_rails) [![Dependency Status](https://gemnasium.com/jhnvz/robin_rails.png)](https://gemnasium.com/jhnvz/robin_rails)
