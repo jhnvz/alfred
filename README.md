@@ -53,6 +53,7 @@ Robin.define do
           :title => 'Robin rocks!' 
         }
       }
+    end
   end
 end
 ```
