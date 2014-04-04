@@ -8,7 +8,7 @@ module Guard
 
         load_rails!
 
-        ::Robin.reload!
+        ::Robin.load!
       end
 
       def run_all
@@ -25,12 +25,14 @@ module Guard
       end
 
       def reload
-        Robin.reload!
+        ::Robin.reload!
       end
 
       def load_rails!
-        load 'config/application.rb'
-        Rails.application.initialize!
+        unless ::Rails.application
+          load 'config/application.rb'
+          Rails.application.initialize!
+        end
         require 'robin_rails'
       end
     end
