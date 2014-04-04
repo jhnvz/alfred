@@ -12,14 +12,14 @@ module Guard
       end
 
       def run_all
-        ::Guard::UI.info("Running all scenario's", :reset => true)
+        ::Guard::UI.info("Running all Robin scenario's\n", :reset => true)
 
         ::Robin::Runner.new
       end
 
       def run(paths)
         return true if paths.empty?
-        ::Guard::UI.info("Looking for: #{paths.join(' ')}", :reset => true)
+        ::Guard::UI.info("Robin is looking for: #{paths.join(' ')}\n", :reset => true)
 
         ::Robin::Runner.new(paths)
       end

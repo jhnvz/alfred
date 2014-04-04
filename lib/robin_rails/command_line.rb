@@ -12,6 +12,9 @@ module Robin
       load_rails
 
       ::Robin.load!
+
+      STDOUT.print("Robin: Running all scenario's\n")
+
       ::Robin::Runner.new(@options[:files])
     end
 

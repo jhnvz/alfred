@@ -105,8 +105,6 @@ module Robin
       File.open(filename, 'w') do |fixture|
         fixture.write(@response.body)
       end
-
-      STDOUT.print("Robin: Created fixture at: #{filename}\n")
     end
     alias :save! :save
 
