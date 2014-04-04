@@ -40,7 +40,7 @@ For example:
 
 Robin.define do
   controller Api::V1::PostsController do
-    robin 'update post by manager' do
+    scenario 'update post by manager' do
       setup do
         User.create(:name => 'John Doe', :permissions => { :manager => true })
         Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
@@ -61,6 +61,24 @@ Will create `spec/fixtures/api/v1/posts/update/update_by_manager.json`
 
 Configuration
 ------------
+
+```ruby
+# spec/robin_configuration.rb
+
+Robin.configure do |c|
+  ## Includes
+  config.include FactoryGirl::Syntax::Methods, :controller
+  config.include Devise::TestHelpers, :controller
+
+  ## Before
+  config.before do
+    Apartment::Database.stub(:create).and_return(true)
+  end
+  
+  ## Mocking framework
+  config.mock_with :rspec
+end
+```
 
 Configuration instructions
 
