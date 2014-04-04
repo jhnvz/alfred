@@ -5,9 +5,9 @@ describe 'test' do
 
   before do
 
-    RobinRails.define do
+    Robin.define do
 
-      robin 'update user by manager' do
+      scenario 'update user by manager' do
         controller Api::V1::UsersController
 
         setup do
@@ -21,7 +21,7 @@ describe 'test' do
   end
 
   it 'should' do
-    RobinRails.registry.items.values.first.run
+    Robin.registry.items.values.first.run
   end
 
 end

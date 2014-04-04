@@ -1,4 +1,4 @@
-module RobinRails
+module Robin
   class Registry
 
     attr_accessor :items
@@ -18,14 +18,14 @@ module RobinRails
     end
 
     ##
-    # Iterate over unique values.
+    # Returns all the items.
     #
-    def each(&block)
-      @items.values.uniq.each(&block)
+    def all
+      @items.values.flatten
     end
 
     ##
-    # Finds a Robin by its identifier.
+    # Finds a Scenario by its identifier.
     #
     # === Params
     #
@@ -33,48 +33,47 @@ module RobinRails
     #
     # === Examples
     #
-    # RobinRails.registry.find("as_manager/get/posts/show")
-    # => #<RobinRails::Robin:0x007f933a6aaa98>
+    #   Robin.registry.find("api/v1/sessions_controller")
+    #   #=> [#<Robin::Scenario:0x007f933a6aaa98>]
     #
     # === Returns
     #
-    # [robin (Robin)] returns the robin if one found
+    # [items (Array)] returns all the items for identifier
     #
     def find(identifier)
       if registered?(identifier)
         @items[identifier]
-      else
-        raise ArgumentError, "not registered: #{identifier}"
       end
     end
     alias :[] :find
 
     ##
-    # Register a new Robin.
+    # Register a new Scenario.
     #
     # === Params
     #
-    # [identifier (String)] the robin identifier
-    # [item (Robin)] the robin object
+    # [identifier (String)] the scenario identifier
+    # [item (Scenario)] the scenario object
     #
     # === Example
     #
-    # RobinRails.registry.register('as_manager/get/posts/show', #<RobinRails::Robin:0x007f933a6aaa98>)
+    #   Robin.registry.register('api/v1/posts_controller', #<Robin::Scenario:0x007f933a6aaa98>)
     #
     def register(identifier, item)
-      @items[identifier] = item
+      @items[identifier] ||= []
+      @items[identifier] << item
     end
 
     ##
-    # Check if Robin is already registered.
+    # Check if Scenario is already registered.
     #
     # === Params
     #
-    # [identifier (String)] the robin identifier
+    # [identifier (String)] the scenario identifier
     #
     # === Example
     #
-    # RobinRails.registry.registered?('as_manager/get/posts/show')
+    #   Scenario.registry.registered?('as_manager/get/posts/show')
     #
     # === Returns
     #
@@ -85,4 +84,4 @@ module RobinRails
     end
 
   end # Registry
-end # RobinRails
+end # Robin

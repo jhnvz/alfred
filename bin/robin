@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+root = File.expand_path('../../lib', __FILE__)
+$:.unshift(root) unless $:.include?(root)
+
+require "robin_rails/command_line"
+Robin::CommandLine.new

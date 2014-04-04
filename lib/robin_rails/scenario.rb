@@ -1,5 +1,5 @@
-module RobinRails
-  class Robin
+module Robin
+  class Scenario
 
     ## Attributes
 
@@ -10,22 +10,15 @@ module RobinRails
     #
     # === Params
     #
-    # [name (String)] name of the definition
+    # [name (String)] name of the scenario
     # [options (Hash)] optional options
     #
     # === Example
     #
-    # Robin.new('admin permissions')
+    #   Scenario.new('admin permissions')
     #
     def initialize(name, options={})
       @name = name.downcase.gsub(' ', '_')
-    end
-
-    ##
-    # Set the identifier so we can lookup robins.
-    #
-    def set_identifier
-      self.identifier = "#{name}/#{method}/#{controller_name}/#{action}"
     end
 
     ##
@@ -33,10 +26,10 @@ module RobinRails
     #
     # === Examples
     #
-    # robin = Robin.new('test')
-    # robin.controller = Api::V1::UserController
+    #   scenario = Scenario.new('test')
+    #   scenario.controller = Api::V1::UserController
     #
-    # robin.controller_name #=> 'api/v1/users_controller'
+    #   scenario.controller_name #=> 'api/v1/users_controller'
     #
     def controller_name
       controller.name.underscore
@@ -46,13 +39,27 @@ module RobinRails
     # Runs the example.
     #
     def run
-      controller.send(:include, Rails.application.routes.url_helpers)
+      controller.send(:include, ::Rails.application.routes.url_helpers)
+
+      RSpec::Mocks::setup(Object.new)
+
+      # Include modules from configuration
+      Robin.configuration.includes_for(:controller).each do |mod|
+        Request.send(:include, mod)
+      end
 
       ## Setup request
       request = Request.new(name)
-      request.setup(&setup)
+
+      ## Run global setup before example
+      Robin.configuration.config[:before].each do |before|
+        request._setup(&before)
+      end
+
       request.set_controller(controller.new)
       request.setup_controller_request_and_response
+
+      request._setup(&setup)
 
       ## Perform request
       request.send(method, action, params)
@@ -62,16 +69,13 @@ module RobinRails
 
       ## Persist response to disk
       save!
-
-      ## Clean up the database
-      DatabaseCleaner.clean
     end
 
     ##
     # Returns the path name to save the fixture.
     #
     def path
-      "#{Rails.root}/spec/fixtures/#{controller_name}/#{action}"
+      "#{::Rails.root}/spec/fixtures/#{controller_name}/#{action}"
     end
 
     ##
@@ -104,5 +108,5 @@ module RobinRails
     end
     alias :save! :save
 
-  end # Robin
-end # RobinRails
+  end # Scenario
+end # Robin

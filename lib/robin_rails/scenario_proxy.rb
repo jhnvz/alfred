@@ -1,5 +1,5 @@
-module RobinRails
-  class RobinProxy
+module Robin
+  class ScenarioProxy
 
     attr_accessor :definition
 
@@ -16,9 +16,9 @@ module RobinRails
     #
     # === Example
     #
-    # setup do
-    #   User.create(:name => 'John Doe')
-    # end
+    #   setup do
+    #     User.create(:name => 'John Doe')
+    #   end
     #
     def setup(&block)
       definition.setup = block
@@ -33,7 +33,7 @@ module RobinRails
     #
     # === Example
     #
-    # controller(ActionController::Base)
+    #   controller(ActionController::Base)
     #
     def controller(controller)
       definition.controller = controller
@@ -44,8 +44,8 @@ module RobinRails
     #
     # === Examples
     #
-    # post :create, :post => { :title => 'Some title' }
-    # get  :show, :id => 1
+    #   post :create, :post => { :title => 'Some title' }
+    #   get  :show, :id => 1
     #
     [
       :get,
@@ -71,7 +71,7 @@ module RobinRails
     #
     # === Example
     #
-    # setup_request(:get, :show, :id => 1)
+    #   setup_request(:get, :show, :id => 1)
     #
     def setup_request_data(method, action, params={})
       definition.method = method
@@ -79,5 +79,5 @@ module RobinRails
       definition.params = params
     end
 
-  end # RobinProxy
-end # RobinRails
+  end # ScenarioProxy
+end # Robin

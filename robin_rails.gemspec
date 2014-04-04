@@ -5,7 +5,7 @@ require 'robin_rails/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "robin_rails"
-  gem.version       = RobinRails::VERSION
+  gem.version       = Robin::VERSION
   gem.authors       = ['Johan van Zonneveld', 'Arjen Oosterkamp']
   gem.email         = ['johan@vzonneveld.nl', 'mail@arjen.me']
   gem.homepage      = 'https://github.com/jhnvz/robin_rails.git'
@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.executables   = ["robin"]
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 

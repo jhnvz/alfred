@@ -1,4 +1,4 @@
-module RobinRails
+module Robin
   class Request < ActionController::TestCase
 
     ##
@@ -8,15 +8,15 @@ module RobinRails
     #
     # === Example
     #
-    # request = RobinRails::Request.new('test')
-    # request.setup do
-    #   User.create(:name => 'John Doe')
-    # end
+    #   request = Robin::Request.new('test')
+    #   request.setup do
+    #     User.create(:name => 'John Doe')
+    #   end
     #
-    def setup(&block)
-      @routes = Rails.application.routes
+    def _setup(&block)
+      @routes = ::Rails.application.routes
 
-      instance_eval(&block)
+      instance_eval(&block) if block_given?
     end
 
     ##
@@ -28,12 +28,12 @@ module RobinRails
     #
     # === Example
     #
-    # request = RobinRails::Request.new('test')
-    # request.set_controller(Api::V1::UsersController.new)
+    #   request = Robin::Request.new('test')
+    #   request.set_controller(Api::V1::UsersController.new)
     #
     def set_controller(controller_instance)
       @controller = controller_instance
     end
 
   end # Request
-end # RobinRails
+end # Robin

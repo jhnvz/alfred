@@ -1,4 +1,4 @@
-module RobinRails
+module Robin
   module Definition
 
     ##
@@ -10,31 +10,31 @@ module RobinRails
     #
     # === Examples
     #
-    # Robin.define do
-    #   controller Api::V1::PostsController do
-    #     robin 'update post by manager' do
-    #       setup do
-    #         User.create(:name => 'John Doe', :permissions => { :manager => true })
-    #         Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
-    #       end
+    #   Robin.define do
+    #     controller Api::V1::PostsController do
+    #       scenario 'update post by manager' do
+    #         setup do
+    #           User.create(:name => 'John Doe', :permissions => { :manager => true })
+    #           Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
+    #         end
     #
-    #       patch :update, {
-    #         :format => :json,
-    #         :id     => 1,
-    #         :post   => {
-    #           :title => 'Robin rocks!'
+    #         patch :update, {
+    #           :format => :json,
+    #           :id     => 1,
+    #           :post   => {
+    #             :title => 'Robin rocks!'
+    #           }
     #         }
-    #       }
+    #     end
     #   end
-    # end
     #
-    # Robin.define do
-    #   robin 'update post by manager' do
-    #     controller Api::V1::PostsController
+    #   Robin.define do
+    #     scenario 'update post by manager' do
+    #       controller Api::V1::PostsController
     #
-    #     etc
-    #   #
-    # end
+    #       etc
+    #     #
+    #   end
     #
     def define(&block)
       DSL.run(block)
@@ -50,16 +50,14 @@ module RobinRails
       # [name (Sym)] the name of the scenario
       # [block (Block)] the block to perform
       #
-      def robin(name, &block)
-        robin            = Robin.new(name)
-        robin.controller = Thread.current[:controller]
+      def scenario(name, &block)
+        scenario            = Scenario.new(name)
+        scenario.controller = Thread.current[:controller]
 
-        proxy = RobinProxy.new(robin)
+        proxy = ScenarioProxy.new(scenario)
         proxy.instance_eval(&block) if block_given?
 
-        robin.set_identifier
-
-        RobinRails.registry.register(robin.identifier, robin)
+        Robin.registry.register(scenario.controller_name, scenario)
       end
 
       ##
@@ -85,13 +83,13 @@ module RobinRails
       #
       # === Examples
       #
-      # new.run do
-      #   setup do
-      #     User.create(:name => 'John Doe')
+      #   new.run do
+      #     setup do
+      #       User.create(:name => 'John Doe')
+      #     end
       #   end
-      # end
       #
-      # => Will call the setup method with a new block
+      #   #=> Will call the setup method with a new block
       #
       def self.run(block)
         new.instance_eval(&block)
