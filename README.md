@@ -42,8 +42,10 @@ Robin.define do
   controller Api::V1::PostsController do
     scenario 'update post by manager' do
       setup do
-        User.create(:name => 'John Doe', :permissions => { :manager => true })
-        Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
+        user = create(:user, :name => 'John Doe', :permissions => { :manager => true })
+        create(:post, :title => 'Robin is awesome', :body => 'It saves me time')
+        
+        sign_in :user, user
       end
 
       patch :update, {
