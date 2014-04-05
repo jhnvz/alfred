@@ -90,6 +90,13 @@ Javascript testing instructions
 Guard
 ------------
 
+```ruby
+guard :robin do
+  watch(%r{^app/controllers/(.+)_(controller)\.rb$}) { |m| "spec/robins/#{m[1]}_#{m[2]}.rb" }
+  watch(%r{^spec/robins/(.+)\.rb$}) { |m| "spec/robins/#{m[1]}.rb" }
+end
+```
+
 Here goes the instruction to setup Robin with Guard.
 
 Supported Ruby Versions
