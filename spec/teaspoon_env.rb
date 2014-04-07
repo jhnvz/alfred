@@ -2,7 +2,7 @@ require File.expand_path('../support/application', __FILE__)
 require 'teaspoon'
 
 # Init dummy application
-RobinRailsTest::Application.initialize!
+AlfredRailsTest::Application.initialize!
 
 Teaspoon.setup do |config|
 
