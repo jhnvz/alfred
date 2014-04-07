@@ -46,7 +46,7 @@ Alfred.define do
   controller Api::V1::PostsController do
     scenario 'update post by manager' do
       setup do
-        create(:poset, :title => 'Alfred is awesome', :body => 'It saves me time')
+        create(:post, :title => 'Alfred is awesome', :body => 'It saves me time')
       end
 
       patch :update, {
@@ -96,6 +96,59 @@ Javascript testing
 ------------
 
 Javascript testing instructions
+
+After defining and generating Alfred fixtures they are accessible in your JavaScript tests.
+
+```coffeescript
+# Get request response
+Alfred.serve('posts/update', 'update post by manager')
+
+# Example of a test
+describe 'PostModel', ->
+
+  describe '#update', ->
+
+    it 'should update model', ->
+      response  = Alfred.serve('posts/update', 'update post by manager')
+      @server   = sinon.fakeServer.create()
+
+      @server.respondWith 'PATCH', 'posts/1', [200, { 'Content-Type': 'application/json' }, response]
+
+      @post.update()
+      @server.respond()
+
+      @post.updated().should.equal(true)
+```
+
+Implementation on this differs on which libraries you are using to test with. In the above example we're using SinonJS to create a fake server response.
+
+### SinonJS adapter
+
+```coffeescript
+# Creates fake server and calls respondWith
+Alfred.SinonAdapter.serve('posts/update', 'update post by manager')
+
+# Example of a test
+describe 'PostModel', ->
+
+  describe '#update', ->
+
+    it 'should update model', ->
+      @server = Alfred.SinonAdapter.serve('posts/update', 'update post by manager')
+
+      @post.update()
+      @server.respond()
+
+      @post.updated().should.equal(true)
+```
+
+### Using any other test adapter
+
+By calling `Alfred.fetch` you can fetch a scenario object with meta data, such as path, request method etc. This can be useful when stubbing a request;
+
+```coffeescript
+Alfred.fetch('posts/update', 'update post by manager') # => Object
+```
 
 Guard
 ------------
