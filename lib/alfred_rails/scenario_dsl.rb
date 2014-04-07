@@ -1,5 +1,5 @@
-module Robin
-  class ScenarioProxy
+module Alfred
+  class ScenarioDSL
 
     attr_accessor :definition
 
@@ -8,7 +8,7 @@ module Robin
     end
 
     ##
-    # Apply setup to Robin instance.
+    # Apply setup to Alfred instance.
     #
     # === Params
     #
@@ -21,7 +21,7 @@ module Robin
     #   end
     #
     def setup(&block)
-      definition.setup = block
+      definition.setup << block
     end
 
     ##
@@ -79,5 +79,5 @@ module Robin
       definition.params = params
     end
 
-  end # ScenarioProxy
-end # Robin
+  end # ScenarioDSL
+end # Alfred

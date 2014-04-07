@@ -1,17 +1,17 @@
-require 'robin_rails/version'
-require 'robin_rails/configuration'
-require 'robin_rails/registry'
-require 'robin_rails/definition'
-require 'robin_rails/scenario'
-require 'robin_rails/scenario_proxy'
-require 'robin_rails/request'
-require 'robin_rails/runner'
+require 'alfred_rails/version'
+require 'alfred_rails/configuration'
+require 'alfred_rails/registry'
+require 'alfred_rails/definition'
+require 'alfred_rails/scenario'
+require 'alfred_rails/scenario_dsl'
+require 'alfred_rails/request'
+require 'alfred_rails/runner'
 
 require 'active_support'
 require 'database_cleaner'
 
-module Robin
-  extend Robin::Definition
+module Alfred
+  extend Alfred::Definition
 
   class << self
 
@@ -24,7 +24,7 @@ module Robin
     end
 
     ##
-    # Configure Robin.
+    # Configure Alfred.
     #
     # === Example
     #
@@ -46,14 +46,14 @@ module Robin
 
     def load!
       ## Load configuration
-      Dir["spec/robin_configuration.rb"].each { |f| load f }
+      Dir["spec/alfred_helper.rb"].each { |f| load f }
 
       ## Load robins
       load_scenarios!
     end
 
     def load_scenarios!
-      Dir["spec/robins/**/*.rb"].each { |f| load f }
+      Dir["spec/alfreds/**/*.rb"].each { |f| load f }
     end
 
     def reload!
@@ -66,9 +66,9 @@ module Robin
   module Rails
     class Railtie < ::Rails::Railtie
       rake_tasks do
-        load "tasks/robin_rails.rake"
+        load "tasks/alfred_rails.rake"
       end
     end # Railtie
   end # Rails
 
-end #Robin
+end # Alfred

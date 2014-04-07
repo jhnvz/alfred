@@ -5,8 +5,7 @@ describe 'test' do
 
   before do
 
-    Robin.define do
-
+    Alfred.define do
       scenario 'update user by manager' do
         controller Api::V1::UsersController
 
@@ -21,7 +20,7 @@ describe 'test' do
   end
 
   it 'should' do
-    Robin.registry.items.values.first.run
+    Alfred.registry.items.values.first.run
   end
 
 end

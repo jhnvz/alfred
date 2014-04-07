@@ -1,20 +1,20 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'robin_rails/version'
+require 'alfred_rails/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "robin_rails"
-  gem.version       = Robin::VERSION
+  gem.name          = "alfred_rails"
+  gem.version       = Alfred::VERSION
   gem.authors       = ['Johan van Zonneveld', 'Arjen Oosterkamp']
   gem.email         = ['johan@vzonneveld.nl', 'mail@arjen.me']
-  gem.homepage      = 'https://github.com/jhnvz/robin_rails.git'
+  gem.homepage      = 'https://github.com/jhnvz/alfred_rails.git'
   gem.summary       = %q{Helps Batman fighting crime}
   gem.description   = %q{Helps Batman fighting crime}
   gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($/)
-  gem.executables   = ["robin"]
+  gem.executables   = ["alfred"]
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 

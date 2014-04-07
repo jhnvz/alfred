@@ -1,4 +1,4 @@
-module Robin
+module Alfred
   class Scenario
 
     ## Attributes
@@ -6,7 +6,7 @@ module Robin
     attr_accessor :name, :setup, :method, :controller, :action, :params, :identifier
 
     ##
-    # Initialize a new Robin.
+    # Initialize a new Alfred scenario.
     #
     # === Params
     #
@@ -18,7 +18,8 @@ module Robin
     #   Scenario.new('admin permissions')
     #
     def initialize(name, options={})
-      @name = name.downcase.gsub(' ', '_')
+      @name  = name.downcase.gsub(' ', '_')
+      @setup = []
     end
 
     ##
@@ -36,32 +37,33 @@ module Robin
     end
 
     ##
-    # Runs the example.
+    # Runs the scenario.
     #
     def run
       controller.send(:include, ::Rails.application.routes.url_helpers)
 
+      ## Initialize mocking framework
       RSpec::Mocks::setup(Object.new)
 
-      # Include modules from configuration
-      Robin.configuration.includes_for(:controller).each do |mod|
+      ## Include modules from configuration
+      Alfred.configuration.includes_for(:controller).each do |mod|
         Request.send(:include, mod)
       end
 
       ## Setup request
       request = Request.new(name)
+      request.set_controller(controller)
 
       ## Run global setup before example
-      Robin.configuration.config[:before].each do |before|
+      Alfred.configuration.config[:before].each do |before|
         request._setup(&before)
       end
 
-      request.set_controller(controller.new)
-      request.setup_controller_request_and_response
-
-      request._setup(&setup)
+      ## Run setup blocks for scenario's
+      setup.each { |setup| request._setup(&setup) }
 
       ## Perform request
+      request.setup_controller_request_and_response
       request.send(method, action, params)
 
       ## Set response
@@ -109,4 +111,4 @@ module Robin
     alias :save! :save
 
   end # Scenario
-end # Robin
+end # Alfred

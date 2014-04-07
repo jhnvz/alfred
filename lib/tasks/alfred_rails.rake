@@ -1,8 +1,8 @@
-task :robin do
+task :alfred do
   ENV['RACK_ENV'] = ENV['RAILS_ENV'] = 'test'
 
   ## Run all examples
 
 
-  RobinRails.registry.each { |robin| robin.run }
+  Alfred.registry.each { |alfred| alfred.run }
 end

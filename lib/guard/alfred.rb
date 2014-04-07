@@ -4,8 +4,8 @@ require 'guard'
 require 'guard/plugin'
 
 module Guard
-  class Robin < Plugin
-    require 'guard/robin/runner'
+  class Alfred < Plugin
+    require 'guard/alfred/runner'
 
     attr_accessor :options, :runner
 
@@ -22,7 +22,7 @@ module Guard
     end
 
     def start
-      ::Guard::UI.info 'Guard::Robin is running'
+      ::Guard::UI.info 'Guard::Alfred is running'
       run_all if @options[:all_on_start]
     end
 
@@ -39,5 +39,5 @@ module Guard
       runner.run(paths)
     end
 
-  end # Robin
+  end # Alfred
 end # Guard

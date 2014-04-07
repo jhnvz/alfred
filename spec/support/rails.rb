@@ -1,6 +1,6 @@
 ENV['RAILS_ENV'] = 'test'
 
-module RobinRailsTest
+module AlfredRailsTest
   class Application < Rails::Application
     config.active_support.deprecation = :log
 
@@ -10,4 +10,4 @@ module RobinRailsTest
     end
   end
 end
-#RobinRailsTest::Application.initialize!
+#AlfredRailsTest::Application.initialize!

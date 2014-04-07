@@ -11,7 +11,7 @@ require 'rails/all'
 
 ActiveRecord::Base.establish_connection(
   :adapter => "sqlite3",
-  :database => File.dirname(__FILE__) + "/fixtures/db/robin_rails.sqlite3"
+  :database => File.dirname(__FILE__) + "/fixtures/db/alfred_rails.sqlite3"
 )
 
 ## Load support files
@@ -28,6 +28,6 @@ Dir["spec/support/models/**/*.rb"].each { |f| load f }
 require 'rspec'
 require 'rspec/autorun'
 
-## Load robin_rails
+## Load alfred_rails
 
-require 'robin_rails'
+require 'alfred_rails'
