@@ -20,7 +20,7 @@ describe 'test' do
   end
 
   it 'should' do
-    Alfred.registry.items.values.first.run
+    Alfred.registry.all.first.run
   end
 
 end
