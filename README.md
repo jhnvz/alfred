@@ -39,23 +39,28 @@ For example:
 # spec/robins/api/v1/posts_controller.rb
 
 Robin.define do
+  setup do
+    sign_in :user, create(:user)
+  end
+
   controller Api::V1::PostsController do
     scenario 'update post by manager' do
       setup do
-        user = create(:user, :name => 'John Doe', :permissions => { :manager => true })
-        create(:post, :title => 'Robin is awesome', :body => 'It saves me time')
-        
-        sign_in :user, user
+        create(:poset, :title => 'Robin is awesome', :body => 'It saves me time')
       end
 
       patch :update, {
-        :format => :json, 
-        :id     => 1, 
-        :post   => { 
-          :title => 'Robin rocks!' 
+        :format => :json,
+        :id     => 1,
+        :post   => {
+          :title => 'Robin rocks!'
         }
       }
     end
+  end
+
+  scenario 'update post by manager' do
+    controller Api::V1::PostsController
   end
 end
 ```
