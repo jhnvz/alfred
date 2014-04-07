@@ -1,14 +1,14 @@
 module Alfred
   class ScenarioDSL
 
-    attr_accessor :definition
+    attr_accessor :scenario
 
-    def initialize(definition)
-      @definition = definition
+    def initialize(scenario)
+      @scenario = scenario
     end
 
     ##
-    # Apply setup to Alfred instance.
+    # Apply setup to Scenario instance.
     #
     # === Params
     #
@@ -21,7 +21,7 @@ module Alfred
     #   end
     #
     def setup(&block)
-      definition.setup << block
+      scenario.setup << block
     end
 
     ##
@@ -36,7 +36,7 @@ module Alfred
     #   controller(ActionController::Base)
     #
     def controller(controller)
-      definition.controller = controller
+      scenario.controller = controller
     end
 
     ##
@@ -74,9 +74,9 @@ module Alfred
     #   setup_request(:get, :show, :id => 1)
     #
     def setup_request_data(method, action, params={})
-      definition.method = method
-      definition.action = action
-      definition.params = params
+      scenario.method = method
+      scenario.action = action
+      scenario.params = params
     end
 
   end # ScenarioDSL

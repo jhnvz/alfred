@@ -20,8 +20,9 @@ load 'spec/support/rails.rb'
 load 'spec/support/routes.rb'
 load 'spec/support/schema.rb'
 
-Dir["spec/support/controllers/**/*.rb"].each { |f| load f }
-Dir["spec/support/models/**/*.rb"].each { |f| load f }
+[:controllers, :models, :lib].each do |dir|
+  Dir["spec/support/#{dir}/**/*.rb"].each { |f| load f }
+end
 
 ## Rspec
 

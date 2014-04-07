@@ -61,6 +61,10 @@ module Alfred
       load_scenarios!
     end
 
+    def fixture_path
+      "#{::Rails.root}/spec/fixtures"
+    end
+
   end
 
   module Rails

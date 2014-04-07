@@ -77,7 +77,7 @@ module Alfred
     # Returns the path name to save the fixture.
     #
     def path
-      "#{::Rails.root}/spec/fixtures/#{controller_name}/#{action}"
+      "#{Alfred.fixture_path}/#{controller_name}/#{action}"
     end
 
     ##
