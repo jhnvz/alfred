@@ -19,7 +19,7 @@ module Alfred
       if scenarios.any?
         STDOUT.print("\n")
 
-        message  = ["\nAlfred generated the following fixures:\n"]
+        message  = ["\n#{Time.now.strftime('%H:%M:%S')} - INFO - Alfred generated the following fixtures:\n"]
         progress = ProgressBar.create(
           :starting_at => 0,
           :format      => '%c/%C: |%B| %a',

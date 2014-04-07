@@ -11,13 +11,12 @@ module Alfred
     # === Params
     #
     # [name (String)] name of the scenario
-    # [options (Hash)] optional options
     #
     # === Example
     #
     #   Scenario.new('admin permissions')
     #
-    def initialize(name, options={})
+    def initialize(name)
       @name  = name.downcase.gsub(' ', '_')
       @setup = []
     end

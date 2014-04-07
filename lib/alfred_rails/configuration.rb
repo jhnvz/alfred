@@ -3,9 +3,6 @@ module Alfred
 
     attr_accessor :config
 
-    ##
-    # Initialize a new configuration.
-    #
     def initialize
       @config = {
         :includes => [],
