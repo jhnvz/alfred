@@ -56,6 +56,23 @@ describe Alfred::Definition do
         scenario.setups.size.should == 1
       end
 
+      it 'should be able to set setup within controller block' do
+        Alfred.define do
+          controller Api::V1::UsersController do
+            setup { User.create(:name => 'John') }
+
+            scenario 'foo bar'
+            scenario 'foo bar 1'
+          end
+        end
+
+        scenario = Alfred.registry.all[0]
+        scenario.setups.size.should == 1
+
+        scenario = Alfred.registry.all[1]
+        scenario.setups.size.should == 1
+      end
+
       it 'should append setup defined in scenario' do
         Alfred.define do
           setup { User.create(:name => 'John') }
