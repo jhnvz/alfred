@@ -8,7 +8,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/alfred_rails.png)](http://badge.fury.io/rb/alfred_rails) [![Build Status](https://secure.travis-ci.org/jhnvz/alfred_rails.png?branch=master)](http://travis-ci.org/jhnvz/alfred_rails) [![Coverage Status](https://coveralls.io/repos/jhnvz/alfred_rails/badge.png?branch=master)](https://coveralls.io/r/jhnvz/alfred_rails) [![Code Climate](https://codeclimate.com/github/jhnvz/alfred_rails.png)](https://codeclimate.com/github/jhnvz/alfred_rails) [![Dependency Status](https://gemnasium.com/jhnvz/alfred_rails.png)](https://gemnasium.com/jhnvz/alfred_rails)
 
-Serves controller responses under several conditions.
+Serves controller action responses under several conditions.
 
 How it works
 ------------
