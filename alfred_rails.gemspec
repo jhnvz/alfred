@@ -26,6 +26,9 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'batman-rails'
   gem.add_development_dependency 'sqlite3'
 
+  gem.add_development_dependency 'teaspoon'
+  gem.add_development_dependency 'coffee-script'
+
   gem.add_dependency 'database_cleaner'
   gem.add_dependency 'ruby-progressbar'
 
