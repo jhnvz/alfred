@@ -1,11 +1,14 @@
 require 'rails/all'
 
-## Setup fixture database for activerecord
-
-ActiveRecord::Base.establish_connection(
-  :adapter => "sqlite3",
-  :database => File.dirname(__FILE__) + "/../fixtures/db/robin_rails.sqlite3"
-)
+module Rails
+  class Application
+    class Configuration
+      def database_configuration
+        YAML::load File.read('spec/fixtures/database.yml')
+      end
+    end
+  end
+end
 
 ## Load support files
 
