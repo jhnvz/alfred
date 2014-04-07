@@ -53,6 +53,7 @@ module Alfred
       ## Setup request
       request = Request.new(name)
       request.set_controller(controller)
+      request.setup_controller_request_and_response
 
       ## Run global setup before example
       Alfred.configuration.config[:before].each do |before|
@@ -63,7 +64,6 @@ module Alfred
       setup.each { |setup| request._setup(&setup) }
 
       ## Perform request
-      request.setup_controller_request_and_response
       request.send(method, action, params)
 
       ## Set response
