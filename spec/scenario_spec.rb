@@ -8,8 +8,8 @@ describe Alfred::Scenario do
     scenario.name.should == 'foo_bar'
   end
 
-  it 'should initialize with empty setup array' do
-    scenario.setup.should == []
+  it 'should initialize with empty setups array' do
+    scenario.setups.should == []
   end
 
   describe '#controller_name' do

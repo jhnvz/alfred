@@ -9,11 +9,11 @@ describe Alfred::ScenarioDSL do
 
     it 'should add setup blocks to definition' do
       dsl.setup { User.new }
-      scenario.setup.size.should == 1
-      scenario.setup.first.should be_kind_of(Proc)
+      scenario.setups.size.should == 1
+      scenario.setups.first.should be_kind_of(Proc)
 
       dsl.setup { User.new }
-      scenario.setup.size.should == 2
+      scenario.setups.size.should == 2
     end
 
   end

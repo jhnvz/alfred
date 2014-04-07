@@ -1,5 +1,6 @@
 require 'alfred_rails/version'
 require 'alfred_rails/configuration'
+require 'alfred_rails/mock'
 require 'alfred_rails/registry'
 require 'alfred_rails/definition'
 require 'alfred_rails/scenario'
@@ -84,7 +85,7 @@ module Alfred
   module Rails
     class Railtie < ::Rails::Railtie
       rake_tasks do
-        load "tasks/alfred_rails.rake"
+        load "tasks/alfred.rake"
       end
     end # Railtie
   end # Rails

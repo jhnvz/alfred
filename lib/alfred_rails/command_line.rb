@@ -55,11 +55,18 @@ module Alfred
     private
 
       ##
+      # Info to prepend for STDOUT prints.
+      #
+      def info_for_stdout
+        "#{Time.now.strftime('%H:%M:%S')} - INFO - "
+      end
+
+      ##
       # Displays a message about which controllers are run.
       #
       def message
         message = @options[:files].empty? ? "all scenario's" : @options[:files].join(' ')
-        "#{Time.now.strftime('%H:%M:%S')} - INFO - Alfred: Running #{message}\n"
+        "#{info_for_stdout}Alfred: Running #{message}\n"
       end
 
   end # CommandLine
