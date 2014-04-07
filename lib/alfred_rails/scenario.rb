@@ -46,7 +46,7 @@ module Alfred
       RSpec::Mocks::setup(Object.new)
 
       ## Include modules from configuration
-      Alfred.configuration.includes_for(:controller).each do |mod|
+      Alfred.configuration.includes.each do |mod|
         Request.send(:include, mod)
       end
 
@@ -56,8 +56,8 @@ module Alfred
       request.setup_controller_request_and_response
 
       ## Run global setup before example
-      Alfred.configuration.config[:before].each do |before|
-        request._setup(&before)
+      Alfred.configuration.setup.each do |setup|
+        request._setup(&setup)
       end
 
       ## Run setup blocks for scenario's

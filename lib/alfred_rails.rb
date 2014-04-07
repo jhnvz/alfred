@@ -15,10 +15,24 @@ module Alfred
 
   class << self
 
+    ##
+    # Builds registry or returns existing registry.
+    #
+    # === Returns
+    #
+    # [registry (Alfred::Registry)] the registry
+    #
     def registry
       @registry ||= Registry.new
     end
 
+    ##
+    # Builds configuration or returns existing configuration.
+    #
+    # === Returns
+    #
+    # [configuration (Alfred::Configuration)] the configuration instance
+    #
     def configuration
       @configuration ||= Configuration.new
     end
@@ -30,7 +44,7 @@ module Alfred
     #
     #   configure do |c|
     #     c.include FactoryGirl::Syntax::Methods
-    #     c.include Devise::TestHelpers, :controller
+    #     c.include Devise::TestHelpers
     #
     #     c.before do
     #       # Do not use multi-tenancy in tests
@@ -38,34 +52,34 @@ module Alfred
     #       Apartment::Database.stub(:switch).and_return(true)
     #       Apartment::Database.stub(:drop).and_return(true)
     #     end
+    #
+    #     c.mock_with :rspec
+    #     c.fixture_path 'spec/fixtures'
     #   end
     #
     def configure
       yield configuration if block_given?
     end
 
+    ##
+    # Loads the scenario's
+    #
     def load!
       ## Load configuration
       Dir["spec/alfred_helper.rb"].each { |f| load f }
 
-      ## Load robins
-      load_scenarios!
-    end
-
-    def load_scenarios!
+      ## Load scenario's
       Dir["spec/alfreds/**/*.rb"].each { |f| load f }
     end
 
-    def reload!
-      @registry.try(:clear!)
-      load_scenarios!
-    end
-
+    ##
+    # Returns fixture path defined in Configuration.
+    #
     def fixture_path
-      "#{::Rails.root}/spec/fixtures"
+      configuration.fixture_path
     end
 
-  end
+  end # class << self
 
   module Rails
     class Railtie < ::Rails::Railtie
