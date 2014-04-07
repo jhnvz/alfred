@@ -30,10 +30,6 @@ module Guard
       runner.run_all
     end
 
-    def reload
-      runner.reload
-    end
-
     def run_on_modifications(paths)
       return false if paths.empty?
       runner.run(paths)
