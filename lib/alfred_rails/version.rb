@@ -1,3 +1,3 @@
-module Robin
+module Alfred
   VERSION = "0.0.1"
 end

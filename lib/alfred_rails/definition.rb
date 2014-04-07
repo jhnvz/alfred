@@ -1,8 +1,8 @@
-module Robin
+module Alfred
   module Definition
 
     ##
-    # Defines a new Robin scenario.
+    # Defines a new Alfred scenario.
     #
     # === Params
     #
@@ -10,54 +10,59 @@ module Robin
     #
     # === Examples
     #
-    #   Robin.define do
+    #   Alfred.define do
+    #     setup do
+    #       sign_in :user, create(:user)
+    #     end
+    #
     #     controller Api::V1::PostsController do
     #       scenario 'update post by manager' do
     #         setup do
-    #           User.create(:name => 'John Doe', :permissions => { :manager => true })
-    #           Post.create(:title => 'Robin is awesome', :body => 'It saves me time')
+    #           create(:poset, :title => 'Alfred is awesome', :body => 'It saves me time')
     #         end
     #
     #         patch :update, {
     #           :format => :json,
     #           :id     => 1,
     #           :post   => {
-    #             :title => 'Robin rocks!'
+    #             :title => 'Alfred rocks!'
     #           }
     #         }
+    #       end
+    #     end
+    #
+    #     scenario 'update post by manager' do
+    #       controller Api::V1::PostsController
     #     end
     #   end
     #
-    #   Robin.define do
-    #     scenario 'update post by manager' do
-    #       controller Api::V1::PostsController
-    #
-    #       etc
-    #     #
-    #   end
-    #
     def define(&block)
+      Thread.current[:controller] = nil
+      Thread.current[:setup]      = []
+
       DSL.run(block)
     end
 
     class DSL
 
       ##
-      # Define a new robin.
+      # Define a new scenario.
       #
       # === Params
       #
-      # [name (Sym)] the name of the scenario
+      # [name (Symbol)] the name of the scenario
       # [block (Block)] the block to perform
       #
       def scenario(name, &block)
         scenario            = Scenario.new(name)
         scenario.controller = Thread.current[:controller]
 
-        proxy = ScenarioProxy.new(scenario)
-        proxy.instance_eval(&block) if block_given?
+        Thread.current[:setup].each { |setup| scenario.setup << setup }
 
-        Robin.registry.register(scenario.controller_name, scenario)
+        dsl = ScenarioDSL.new(scenario)
+        dsl.instance_eval(&block) if block_given?
+
+        Alfred.registry.register(scenario.controller_name, scenario)
       end
 
       ##
@@ -72,6 +77,29 @@ module Robin
         Thread.current[:controller] = controller
 
         instance_eval(&block)
+      end
+
+      ##
+      # Define setup for every scenario.
+      #
+      # === Params
+      #
+      # [block (Block)] the block to setup on Alfred Scenario
+      #
+      # === Examples
+      #
+      #   Alfred.define do
+      #     setup do
+      #       SomeController.stub(:current_user).and_return(create(:user))
+      #     end
+      #
+      #     scenario 'alfred is awesome' do
+      #
+      #     end
+      #   end
+      #
+      def setup(&block)
+        Thread.current[:setup] << block
       end
 
       ##
@@ -98,4 +126,4 @@ module Robin
     end # DSL
 
   end # Definition
-end # RobinRails
+end # Alfred

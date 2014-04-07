@@ -1,4 +1,4 @@
-module Robin
+module Alfred
   class Configuration
 
     attr_accessor :config
@@ -64,4 +64,4 @@ module Robin
     end
 
   end # Configuration
-end # Robin
+end # Alfred

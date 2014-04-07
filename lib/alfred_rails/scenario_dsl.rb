@@ -1,14 +1,14 @@
-module Robin
-  class ScenarioProxy
+module Alfred
+  class ScenarioDSL
 
-    attr_accessor :definition
+    attr_accessor :scenario
 
-    def initialize(definition)
-      @definition = definition
+    def initialize(scenario)
+      @scenario = scenario
     end
 
     ##
-    # Apply setup to Robin instance.
+    # Apply setup to Scenario instance.
     #
     # === Params
     #
@@ -21,7 +21,7 @@ module Robin
     #   end
     #
     def setup(&block)
-      definition.setup = block
+      scenario.setup << block
     end
 
     ##
@@ -36,7 +36,7 @@ module Robin
     #   controller(ActionController::Base)
     #
     def controller(controller)
-      definition.controller = controller
+      scenario.controller = controller
     end
 
     ##
@@ -74,10 +74,10 @@ module Robin
     #   setup_request(:get, :show, :id => 1)
     #
     def setup_request_data(method, action, params={})
-      definition.method = method
-      definition.action = action
-      definition.params = params
+      scenario.method = method
+      scenario.action = action
+      scenario.params = params
     end
 
-  end # ScenarioProxy
-end # Robin
+  end # ScenarioDSL
+end # Alfred

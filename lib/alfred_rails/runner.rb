@@ -1,17 +1,17 @@
 require 'ruby-progressbar'
 
-module Robin
+module Alfred
   class Runner
 
     def initialize(paths=[])
-      paths = paths.map { |p| p.gsub('.rb', '').gsub('spec/robins/', '') }
+      paths = paths.map { |p| p.gsub('.rb', '').gsub('spec/alfreds/', '') }
 
       if paths.empty?
-        scenarios = Robin.registry.all
+        scenarios = Alfred.registry.all
       else
         scenarios = []
         paths.each do |path|
-          scenarios << Robin.registry[path]
+          scenarios << Alfred.registry[path]
         end
         scenarios = scenarios.flatten.compact
       end
@@ -19,7 +19,7 @@ module Robin
       if scenarios.any?
         STDOUT.print("\n")
 
-        message  = ["\nRobin generated the following fixures:\n"]
+        message  = ["\nAlfred generated the following fixures:\n"]
         progress = ProgressBar.create(
           :starting_at => 0,
           :format      => '%c/%C: |%B| %a',
@@ -39,4 +39,4 @@ module Robin
     end
 
   end # Runner
-end # RobinRails
+end # Alfred

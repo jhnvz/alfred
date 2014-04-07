@@ -1,4 +1,4 @@
-module Robin
+module Alfred
   class Request < ActionController::TestCase
 
     ##
@@ -8,14 +8,12 @@ module Robin
     #
     # === Example
     #
-    #   request = Robin::Request.new('test')
+    #   request = Alfred::Request.new('test')
     #   request.setup do
     #     User.create(:name => 'John Doe')
     #   end
     #
     def _setup(&block)
-      @routes = ::Rails.application.routes
-
       instance_eval(&block) if block_given?
     end
 
@@ -28,12 +26,13 @@ module Robin
     #
     # === Example
     #
-    #   request = Robin::Request.new('test')
-    #   request.set_controller(Api::V1::UsersController.new)
+    #   request = Alfred::Request.new('test')
+    #   request.set_controller(Api::V1::UsersController)
     #
-    def set_controller(controller_instance)
-      @controller = controller_instance
+    def set_controller(controller)
+      @routes     = ::Rails.application.routes
+      @controller = controller.new
     end
 
   end # Request
-end # Robin
+end # Alfred

@@ -12,6 +12,6 @@ require 'support/application'
 require 'rspec'
 require 'rspec/autorun'
 
-## Load robin_rails
+## Load alfred_rails
 
-require 'robin_rails'
+require 'alfred_rails'

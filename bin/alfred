@@ -2,5 +2,5 @@
 root = File.expand_path('../../lib', __FILE__)
 $:.unshift(root) unless $:.include?(root)
 
-require "robin_rails/command_line"
-Robin::CommandLine.new
+require "alfred_rails/command_line"
+Alfred::CommandLine.new

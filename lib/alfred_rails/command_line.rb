@@ -2,7 +2,7 @@ ENV["RAILS_ENV"] ||= 'test'
 
 require "optparse"
 
-module Robin
+module Alfred
   class CommandLine
 
     def initialize
@@ -11,20 +11,20 @@ module Robin
 
       load_rails
 
-      ::Robin.load!
+      ::Alfred.load!
 
-      STDOUT.print("Robin: Running all scenario's\n")
+      STDOUT.print("Alfred: Running all scenario's\n")
 
-      ::Robin::Runner.new(@options[:files])
+      ::Alfred::Runner.new(@options[:files])
     end
 
     def parse_options
       options = {}
       OptionParser.new do |options|
-        options.banner = "Usage: robin [options] [files]\n"
+        options.banner = "Usage: alfred [options] [files]\n"
 
         options.on "-v", "--version", "Display the version.", proc {
-          STDOUT.print("#{RobinRails::VERSION}\n")
+          STDOUT.print("#{AlfredRails::VERSION}\n")
           exit
         }
 
@@ -37,7 +37,7 @@ module Robin
     def load_rails
       load 'config/application.rb'
       ::Rails.application.initialize!
-      require 'robin_rails'
+      require 'alfred_rails'
     end
 
     def abort(message = nil)
