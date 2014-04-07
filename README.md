@@ -4,16 +4,16 @@
 ------------
 
 
-## Robin Rails
+## Alfred Rails
 
-[![Gem Version](https://badge.fury.io/rb/robin_rails.png)](http://badge.fury.io/rb/robin_rails) [![Build Status](https://secure.travis-ci.org/jhnvz/robin_rails.png?branch=master)](http://travis-ci.org/jhnvz/robin_rails) [![Coverage Status](https://coveralls.io/repos/jhnvz/robin_rails/badge.png?branch=master)](https://coveralls.io/r/jhnvz/robin_rails) [![Code Climate](https://codeclimate.com/github/jhnvz/robin_rails.png)](https://codeclimate.com/github/jhnvz/robin_rails) [![Dependency Status](https://gemnasium.com/jhnvz/robin_rails.png)](https://gemnasium.com/jhnvz/robin_rails)
+[![Gem Version](https://badge.fury.io/rb/alfred_rails.png)](http://badge.fury.io/rb/alfred_rails) [![Build Status](https://secure.travis-ci.org/jhnvz/alfred_rails.png?branch=master)](http://travis-ci.org/jhnvz/alfred_rails) [![Coverage Status](https://coveralls.io/repos/jhnvz/alfred_rails/badge.png?branch=master)](https://coveralls.io/r/jhnvz/alfred_rails) [![Code Climate](https://codeclimate.com/github/jhnvz/alfred_rails.png)](https://codeclimate.com/github/jhnvz/alfred_rails) [![Dependency Status](https://gemnasium.com/jhnvz/alfred_rails.png)](https://gemnasium.com/jhnvz/alfred_rails)
 
-Robin Rails helps Batman fighting crime.
+Servers controller responses under several conditions.
 
 How it works
 ------------
 
-Robin creates fixture files of your api responses so you can use them in your tests. Ideal if your app's client is build with a javascript framework and you want to test responses under several conditions.
+Alfred creates fixture files of your api responses so you can use them in your tests. Ideal if your app's client is build with a javascript framework and you want to test responses under several conditions.
 
 Resources
 ------------
@@ -27,7 +27,7 @@ Resources
 Installation
 ------------
 
-1. Add `gem 'robin_rails', '~> 1.0.0'` to your Gemfile.
+1. Add `gem 'alfred_rails', '~> 1.0.0'` to your Gemfile.
 1. Run `bundle install`.
 
 Defining scenario's
@@ -38,7 +38,7 @@ For example:
 ```ruby
 # spec/robins/api/v1/posts_controller.rb
 
-Robin.define do
+Alfred.define do
   setup do
     sign_in :user, create(:user)
   end
@@ -46,14 +46,14 @@ Robin.define do
   controller Api::V1::PostsController do
     scenario 'update post by manager' do
       setup do
-        create(:poset, :title => 'Robin is awesome', :body => 'It saves me time')
+        create(:poset, :title => 'Alfred is awesome', :body => 'It saves me time')
       end
 
       patch :update, {
         :format => :json,
         :id     => 1,
         :post   => {
-          :title => 'Robin rocks!'
+          :title => 'Alfred rocks!'
         }
       }
     end
@@ -72,7 +72,7 @@ Configuration
 ```ruby
 # spec/robin_configuration.rb
 
-Robin.configure do |c|
+Alfred.configure do |c|
   ## Includes
   config.include FactoryGirl::Syntax::Methods, :controller
   config.include Devise::TestHelpers, :controller
@@ -104,7 +104,7 @@ guard :robin do
 end
 ```
 
-Here goes the instruction to setup Robin with Guard.
+Here goes the instruction to setup Alfred with Guard.
 
 Supported Ruby Versions
 ------------
