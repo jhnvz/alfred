@@ -1,0 +1,16 @@
+Alfred.configure do |config|
+  <% if includes.any? -%>
+<%= "## Includes" %>
+  <%= includes.join("\n  ") << "\n" %>
+<% end -%>
+  ## Setup
+  config.setup do
+    ## Runs before every scenario
+  end
+
+  ## Mocking framework
+  config.mock_with :<%= mock_with %>
+
+  ## Fixture path
+  config.fixture_path '<%= test_path %>/javascripts/fixtures'
+end

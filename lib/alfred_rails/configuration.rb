@@ -84,6 +84,27 @@ module Alfred
     end
 
     ##
+    # Set or get the test path.
+    #
+    # === Params
+    #
+    # [path (String)] the path to set
+    #
+    # === Examples
+    #
+    #   test_path('spec')
+    #   test_path #=> 'spec'
+    #
+    # === Returns
+    #
+    # [path (String)] the fixture path
+    #
+    def test_path(path=nil)
+      return config[:test_path] if path.nil?
+      config[:test_path] = path
+    end
+
+    ##
     # Set or get the mocking framework.
     #
     # === Params
@@ -114,13 +135,6 @@ module Alfred
       end
 
       ##
-      # Wheter rspec mocks are defined.
-      #
-      def rspec_mocks_defined?
-        defined?(RSpec::Mocks)
-      end
-
-      ##
       # Loads defaults based on defined constants.
       # It guesses fixture_path and mocking framework.
       #
@@ -132,9 +146,14 @@ module Alfred
           "#{::Rails.root}/test/javascripts/fixtures"
         end
 
+        ## Guess test path
+        @config[:test_path] = rspec_defined? ? "spec" : "test"
+
         ## Guess mocking framework
-        @config[:mock_with] = if rspec_mocks_defined?
+        @config[:mock_with] = if rspec_defined?
           :rspec
+        else
+          :test_unit
         end
       end
 

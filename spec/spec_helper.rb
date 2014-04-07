@@ -10,6 +10,7 @@ require 'support/application'
 ## Rspec
 
 require 'rspec'
+require 'ammeter/init'
 require 'rspec/autorun'
 
 ## Load alfred_rails
