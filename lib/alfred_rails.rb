@@ -63,11 +63,12 @@ module Alfred
     end
 
     ##
-    # Loads the scenario's
+    # Loads the configuration and scenario's
     #
     def load!
       ## Load configuration
       Dir["spec/alfred_helper.rb"].each { |f| load f }
+      Dir["test/alfred_helper.rb"].each { |f| load f }
 
       ## Load scenario's
       Dir["spec/alfreds/**/*.rb"].each { |f| load f }
