@@ -8,12 +8,12 @@
 
 [![Gem Version](https://badge.fury.io/rb/alfred_rails.png)](http://badge.fury.io/rb/alfred_rails) [![Build Status](https://secure.travis-ci.org/jhnvz/alfred_rails.png?branch=master)](http://travis-ci.org/jhnvz/alfred_rails) [![Coverage Status](https://coveralls.io/repos/jhnvz/alfred_rails/badge.png?branch=master)](https://coveralls.io/r/jhnvz/alfred_rails) [![Code Climate](https://codeclimate.com/github/jhnvz/alfred_rails.png)](https://codeclimate.com/github/jhnvz/alfred_rails) [![Dependency Status](https://gemnasium.com/jhnvz/alfred_rails.png)](https://gemnasium.com/jhnvz/alfred_rails)
 
-Servers controller responses under several conditions.
+Serves controller responses under several conditions.
 
 How it works
 ------------
 
-Alfred creates fixture files of your api responses so you can use them in your tests. Ideal if your app's client is build with a javascript framework and you want to test responses under several conditions.
+Alfred creates fixture files of your controller responses so you can use them in your tests. Ideal if your app's client is build with a javascript framework and you want to test responses under several conditions.
 
 Resources
 ------------
@@ -36,7 +36,7 @@ Defining scenario's
 For example:
 
 ```ruby
-# spec/robins/api/v1/posts_controller.rb
+# spec/alfreds/api/v1/posts_controller.rb
 
 Alfred.define do
   setup do
@@ -64,26 +64,29 @@ Alfred.define do
   end
 end
 ```
-Will create `spec/fixtures/api/v1/posts/update/update_by_manager.json`
+Will create `spec/javascripts/fixtures/api/v1/posts/update/update_by_manager.js`
 
 Configuration
 ------------
 
 ```ruby
-# spec/robin_configuration.rb
+# spec/alfred_helper.rb
 
-Alfred.configure do |c|
+Alfred.configure do |config|
   ## Includes
-  config.include FactoryGirl::Syntax::Methods, :controller
-  config.include Devise::TestHelpers, :controller
+  config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers
 
-  ## Before
-  config.before do
+  ## Setup
+  config.setup do
     Apartment::Database.stub(:create).and_return(true)
   end
   
   ## Mocking framework
   config.mock_with :rspec
+  
+  ## Fixture path
+  config.fixture_path 'spec/javascripts/fixtures'
 end
 ```
 
@@ -98,9 +101,9 @@ Guard
 ------------
 
 ```ruby
-guard :robin do
-  watch(%r{^app/controllers/(.+)_(controller)\.rb$}) { |m| "spec/robins/#{m[1]}_#{m[2]}.rb" }
-  watch(%r{^spec/robins/(.+)\.rb$}) { |m| "spec/robins/#{m[1]}.rb" }
+guard :alfred do
+  watch(%r{^app/controllers/(.+)\.rb$}) { |m| "spec/alfreds/#{m[1]}.rb" }
+  watch(%r{^spec/alfreds/(.+)\.rb$})    { |m| "spec/alfreds/#{m[1]}.rb" }
 end
 ```
 
