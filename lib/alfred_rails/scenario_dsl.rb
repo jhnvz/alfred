@@ -21,7 +21,7 @@ module Alfred
     #   end
     #
     def setup(&block)
-      scenario.setup << block
+      scenario.setups << block
     end
 
     ##

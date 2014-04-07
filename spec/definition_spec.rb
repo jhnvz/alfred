@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe Alfred::Definition do
 
-  after(:each) { Alfred.registry.clear! }
-
   describe '#define' do
 
     it 'should run the block through DSL' do
@@ -33,8 +31,8 @@ describe Alfred::Definition do
         scenario.method.should == :patch
         scenario.action.should == :update
         scenario.params.should == { :id => 1, :user => { :name => 'John Doe' } }
-        scenario.setup.size.should == 1
-        scenario.setup.first.should be_kind_of(Proc)
+        scenario.setups.size.should == 1
+        scenario.setups.first.should be_kind_of(Proc)
       end
 
     end
@@ -52,10 +50,10 @@ describe Alfred::Definition do
         end
 
         scenario = Alfred.registry.all[0]
-        scenario.setup.size.should == 1
+        scenario.setups.size.should == 1
 
         scenario = Alfred.registry.all[1]
-        scenario.setup.size.should == 1
+        scenario.setups.size.should == 1
       end
 
       it 'should append setup defined in scenario' do
@@ -71,10 +69,10 @@ describe Alfred::Definition do
         end
 
         scenario = Alfred.registry.all[0]
-        scenario.setup.size.should == 1
+        scenario.setups.size.should == 1
 
         scenario = Alfred.registry.all[1]
-        scenario.setup.size.should == 2
+        scenario.setups.size.should == 2
       end
 
     end

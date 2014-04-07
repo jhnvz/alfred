@@ -57,7 +57,7 @@ module Alfred
         scenario            = Scenario.new(name)
         scenario.controller = Thread.current[:controller]
 
-        Thread.current[:setup].each { |setup| scenario.setup << setup }
+        Thread.current[:setup].each { |setup| scenario.setups << setup }
 
         dsl = ScenarioDSL.new(scenario)
         dsl.instance_eval(&block) if block_given?

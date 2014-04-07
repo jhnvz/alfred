@@ -3,7 +3,7 @@ module Alfred
 
     ## Attributes
 
-    attr_accessor :name, :setup, :method, :controller, :action, :params, :identifier
+    attr_accessor :name, :setups, :method, :controller, :action, :params, :identifier
 
     ##
     # Initialize a new Alfred scenario.
@@ -11,15 +11,14 @@ module Alfred
     # === Params
     #
     # [name (String)] name of the scenario
-    # [options (Hash)] optional options
     #
     # === Example
     #
     #   Scenario.new('admin permissions')
     #
-    def initialize(name, options={})
-      @name  = name.downcase.gsub(' ', '_')
-      @setup = []
+    def initialize(name)
+      @name   = name.downcase.gsub(' ', '_')
+      @setups = []
     end
 
     ##
@@ -43,10 +42,10 @@ module Alfred
       controller.send(:include, ::Rails.application.routes.url_helpers)
 
       ## Initialize mocking framework
-      RSpec::Mocks::setup(Object.new)
+      Alfred::Mock.new
 
       ## Include modules from configuration
-      Alfred.configuration.includes_for(:controller).each do |mod|
+      Alfred.configuration.includes.each do |mod|
         Request.send(:include, mod)
       end
 
@@ -56,12 +55,12 @@ module Alfred
       request.setup_controller_request_and_response
 
       ## Run global setup before example
-      Alfred.configuration.config[:before].each do |before|
-        request._setup(&before)
+      Alfred.configuration.setup.each do |setup|
+        request._setup(&setup)
       end
 
-      ## Run setup blocks for scenario's
-      setup.each { |setup| request._setup(&setup) }
+      ## Run setup blocks for scenario
+      setups.each { |setup| request._setup(&setup) }
 
       ## Perform request
       request.send(method, action, params)

@@ -3,9 +3,6 @@ module Alfred
 
     attr_accessor :items
 
-    ##
-    # Initializes a new registry.
-    #
     def initialize
       @items = {}
     end

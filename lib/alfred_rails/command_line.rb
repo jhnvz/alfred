@@ -9,41 +9,65 @@ module Alfred
       @options = {}
       @options[:files] = parse_options
 
-      load_rails
-
-      ::Alfred.load!
-
-      STDOUT.print("Alfred: Running all scenario's\n")
-
+      load!
+      STDOUT.print(message)
       ::Alfred::Runner.new(@options[:files])
     end
 
+    ##
+    # Parses the options and returns the files if present.
+    #
+    # === Returns
+    #
+    # [files (Array)] the files to run
+    #
     def parse_options
       options = {}
       OptionParser.new do |options|
         options.banner = "Usage: alfred [options] [files]\n"
 
         options.on "-v", "--version", "Display the version.", proc {
-          STDOUT.print("#{AlfredRails::VERSION}\n")
+          STDOUT.print("#{Alfred::VERSION}\n")
           exit
         }
-
-        options.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-          @options[:verbose] = v
-        end
       end.parse!
     end
 
-    def load_rails
+    ##
+    # Load Rails environment and Alfred.
+    #
+    def load!
       load 'config/application.rb'
       ::Rails.application.initialize!
+
       require 'alfred_rails'
+      ::Alfred.load!
     end
 
+    ##
+    # Add abort method in case input is aborted.
+    #
     def abort(message = nil)
       STDOUT.print(message) if message
       exit(1)
     end
 
-  end
-end
+    private
+
+      ##
+      # Info to prepend for STDOUT prints.
+      #
+      def info_for_stdout
+        "#{Time.now.strftime('%H:%M:%S')} - INFO - "
+      end
+
+      ##
+      # Displays a message about which controllers are run.
+      #
+      def message
+        message = @options[:files].empty? ? "all scenario's" : @options[:files].join(' ')
+        "#{info_for_stdout}Alfred: Running #{message}\n"
+      end
+
+  end # CommandLine
+end # Alfred
