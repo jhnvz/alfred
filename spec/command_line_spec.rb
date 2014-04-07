@@ -38,6 +38,7 @@ describe Alfred::CommandLine do
     end
 
     it "should run all scenario's if no files present" do
+      subject.any_instance.stub(:parse_options).and_return([])
       Alfred::Runner.should_receive(:new).with([])
       subject.new
     end
