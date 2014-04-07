@@ -17,3 +17,5 @@ matrix:
   allow_failures:
     - env: "RAILS_VERSION=master"
     - rvm: ruby-head
+
+script: "rake && bundle exec teaspoon"
