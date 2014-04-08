@@ -39,3 +39,8 @@ describe 'Alfred', ->
 
     it 'should serve scenario response', ->
       Alfred.serve(@action, @name).should.equal(@response)
+
+  describe '_name', ->
+
+    it 'should underscore name', ->
+      Alfred._name('this is a name').should.equal('this_is_a_name')

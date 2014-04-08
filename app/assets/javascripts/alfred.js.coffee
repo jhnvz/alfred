@@ -15,7 +15,7 @@ class @Alfred
    *
    ###
   @fetch: (action, name) ->
-    @scenarios[action]?[name]
+    @scenarios[action]?[@_name(name)]
 
   ###*
    * Serves an Alfred response.
@@ -56,3 +56,6 @@ class @Alfred
       meta:     object.meta
       response: object.response
     }
+
+  @_name: (name) ->
+    name.replace(/\s+/g, '_').toLowerCase()
