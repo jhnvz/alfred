@@ -72,40 +72,69 @@ module Alfred
       save!
     end
 
-    ##
-    # Returns the path name to save the fixture.
-    #
-    def path
-      "#{Alfred.fixture_path}/#{controller_name}/#{action}"
-    end
+    class FixtureFile
 
-    ##
-    # Returns the folder name to save the fixture.
-    #
-    def filename
-      "#{path}/#{name}.#{format}"
-    end
+      attr_reader :response, :controller_name, :action, :name
 
-    ##
-    # Returns the file format for response content type.
-    #
-    def format
-      case @response.content_type
-      when 'application/json' then 'json'
-      when 'application/html' then 'html'
-      when 'application/xml'  then 'xml'
+      def initialize(response, controller_name, action, name)
+        @response = response
+        @controller_name = controller_name
+        @action = action
+        @name = name
       end
+
+      ##
+      # Returns the path name to save the fixture.
+      #
+      def path
+        "#{Alfred.fixture_path}/#{controller_name}/#{action}"
+      end
+
+      ##
+      # Returns the folder name to save the fixture.
+      #
+      def filename
+        "#{path}/#{name.underscore}.js"
+      end
+
+      def save
+        FileUtils.mkdir_p(path)
+
+        File.open(filename, 'w') do |fixture|
+          fixture.write(content.to_js)
+        end
+      end
+
+      def to_js
+        "Alfred.register(#{content.to_json})"
+      end
+
+      def content
+        {
+          :name     => name,
+          :action   => "#{controller_name}/#{action}",
+          :meta     => meta,
+          :response => response.body
+        }
+      end
+
+      def meta
+        {
+          :path   => response.request.fullpath,
+          :method => response.request.method,
+          :status => response.status,
+          :type   => response.content_type,
+        }
+      end
+
     end
 
     ##
     # Persist the response on disk.
     #
     def save
-      FileUtils.mkdir_p(path)
-
-      File.open(filename, 'w') do |fixture|
-        fixture.write(@response.body)
-      end
+      file = FixtureFile.new(@response, controller_name, action, name)
+      file.save
     end
     alias :save! :save
 

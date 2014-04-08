@@ -21,53 +21,60 @@ describe Alfred::Scenario do
 
   end
 
-  describe '#path' do
+  describe 'FixtureFile' do
 
-    it 'should return path to save the file based on controller and action' do
-      scenario.controller = Api::V1::UsersController
-      scenario.action     = 'index'
+    let(:file) { Alfred::Scenario::FixtureFile.new(nil, 'api/v1/users_controller', 'index', 'foo_bar') }
 
-      scenario.path.should == "#{Alfred.fixture_path}/api/v1/users_controller/index"
+    describe '#path' do
+
+      it 'should return path to save the file based on controller and action' do
+        file.path.should == "#{Alfred.fixture_path}/api/v1/users_controller/index"
+      end
+
     end
 
-  end
+    describe '#filename' do
 
-  describe '#format' do
+      it 'should return the filename based on path' do
+        file.filename.should == "#{Alfred.fixture_path}/api/v1/users_controller/index/foo_bar.js"
+      end
 
-    it 'should return format based on content_type in @response' do
-      response = ResponseProxy.new(:content_type => 'application/json')
-      scenario.instance_variable_set(:@response, response)
-      scenario.format.should == 'json'
-
-      response = ResponseProxy.new(:content_type => 'application/xml')
-      scenario.instance_variable_set(:@response, response)
-      scenario.format.should == 'xml'
-
-      response = ResponseProxy.new(:content_type => 'application/html')
-      scenario.instance_variable_set(:@response, response)
-      scenario.format.should == 'html'
     end
 
-  end
+    describe '#content' do
 
-  describe '#filename' do
+      let(:request) { Object.new }
+      let(:response) { Object.new }
 
-    it 'should return the filename based on path and format' do
-      scenario.controller = Api::V1::UsersController
-      scenario.action     = 'index'
+      before(:each) do
+        request.stub(:fullpath).and_return('api/1/users')
+        request.stub(:method).and_return('GET')
 
-      response = ResponseProxy.new(:content_type => 'application/json')
-      scenario.instance_variable_set(:@response, response)
-      scenario.format.should == 'json'
+        response.stub(:body).and_return('this is data')
+        response.stub(:status).and_return(200)
+        response.stub(:content_type).and_return('application/json')
+        response.stub(:request).and_return(request)
 
-      scenario.filename.should == "#{Alfred.fixture_path}/api/v1/users_controller/index/foo_bar.json"
-    end
+        file.stub(:response).and_return(response)
+      end
 
-  end
+      it 'should return hash with data and request meta data' do
+        file.content.should == {
+          :name     => 'foo_bar',
+          :action   => 'api/v1/users_controller/index',
+          :meta     => {
+            :path     => 'api/1/users',
+            :method   => 'GET',
+            :status   => 200,
+            :type     => 'application/json',
+          },
+          :response => 'this is data'
+        }
+      end
 
-  describe '#save' do
-
-    it 'should persist @response.body to disk' do
+      it 'should return #to_js' do
+        file.to_js.should include "Alfred.register"
+      end
 
     end
 
