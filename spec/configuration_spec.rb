@@ -28,10 +28,10 @@ describe Alfred::Configuration do
       configuration.mock_with.should == :rspec
     end
 
-    it 'should set mocking framework to nil if Rspec::Mocks is not defined' do
-      Alfred::Configuration.any_instance.stub(:rspec_mocks_defined?).and_return(false)
+    it 'should set mocking framework to :test_unit if Rspec::Mocks is not defined' do
+      Alfred::Configuration.any_instance.stub(:rspec_defined?).and_return(false)
       configuration = Alfred::Configuration.new
-      configuration.mock_with.should be_nil
+      configuration.mock_with.should == :test_unit
     end
 
   end

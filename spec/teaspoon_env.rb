@@ -1,11 +1,7 @@
 require File.expand_path('../support/application', __FILE__)
 require 'teaspoon'
 
-# Init dummy application
-AlfredRailsTest::Application.initialize!
-
 Teaspoon.setup do |config|
-
   config.mount_at     = '/teaspoon'
   config.root         = nil
   config.asset_paths  = ['spec/javascripts']

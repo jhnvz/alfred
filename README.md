@@ -28,12 +28,13 @@ Installation
 ------------
 
 1. Add `gem 'alfred_rails', '~> 1.0.0'` to your Gemfile.
-1. Run `bundle install`.
+2. Run `bundle install`.
+3. Run `rails g alfred:install` 
 
 Defining scenario's
 ------------
 
-For example:
+You can create an empty scenario definition by running: `rails g alfred:controller api/v1/posts`
 
 ```ruby
 # spec/alfreds/api/v1/posts_controller.rb
