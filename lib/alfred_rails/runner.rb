@@ -30,7 +30,7 @@ module Alfred
           scenario.run
           progress.increment
 
-          message << "#{scenario.filename}\n"
+          message << "#{scenario.file.filename}\n"
         end
 
         message << "\n"

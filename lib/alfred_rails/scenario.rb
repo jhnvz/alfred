@@ -104,7 +104,7 @@ module Alfred
         FileUtils.mkdir_p(path)
 
         File.open(filename, 'w') do |fixture|
-          fixture.write(content.to_js)
+          fixture.write(to_js)
         end
       end
 
@@ -141,11 +141,14 @@ module Alfred
 
     end
 
+    def file
+      @file ||= FixtureFile.new(@response, controller_name, action, name)
+    end
+
     ##
     # Persist the response on disk.
     #
     def save
-      file = FixtureFile.new(@response, controller_name, action, name)
       file.save
     end
     alias :save! :save
