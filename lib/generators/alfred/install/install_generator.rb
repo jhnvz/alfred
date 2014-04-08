@@ -5,6 +5,10 @@ module Alfred
   module Generators
     class InstallGenerator < ::Rails::Generators::Base
 
+      def self.source_root
+        @source_root ||= File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
+      end
+
       ##
       # Define method for checking presence of a module.
       # Will also include module in config.
@@ -34,10 +38,6 @@ module Alfred
           :include    => 'FactoryGirl::Syntax::Methods'
         }
       ]
-
-      def self.source_root
-        @source_root ||= File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
-      end
 
       def create_alfred_helper
         template "alfred_helper.erb", "#{test_path}/alfred_helper.rb"

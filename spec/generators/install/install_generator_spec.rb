@@ -20,27 +20,29 @@ describe Alfred::Generators::InstallGenerator do
       stub_class.stub(:factory_girl_defined?).and_return(false)
     end
 
+    subject { File.read(file('spec/alfred_helper.rb')) }
+
     it "sets mocking framework to rspec if defined" do
       run_generator
-      File.read(file('spec/alfred_helper.rb')).should include('config.mock_with :rspec')
+      subject.should include('config.mock_with :rspec')
     end
 
     it "sets mocking framework to test_unit if rspec is not defined" do
       Alfred::Generators::InstallGenerator.any_instance.stub(:mock_with).and_return(:test_unit)
       run_generator
-      File.read(file('spec/alfred_helper.rb')).should include('config.mock_with :test_unit')
+      subject.should include('config.mock_with :test_unit')
     end
 
     it 'should include Devise::TestHelpers if Devise is defined' do
       Alfred::Generators::InstallGenerator.any_instance.stub(:devise_defined?).and_return(true)
       run_generator
-      File.read(file('spec/alfred_helper.rb')).should include('config.include Devise::TestHelpers')
+      subject.should include('config.include Devise::TestHelpers')
     end
 
     it 'should include FactoryGirl::Syntax::Methods if FactoryGirl is defined?' do
       Alfred::Generators::InstallGenerator.any_instance.stub(:factory_girl_defined?).and_return(true)
       run_generator
-      File.read(file('spec/alfred_helper.rb')).should include('config.include FactoryGirl::Syntax::Methods')
+      subject.should include('config.include FactoryGirl::Syntax::Methods')
     end
 
   end
