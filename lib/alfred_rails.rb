@@ -1,4 +1,5 @@
 require 'alfred_rails/version'
+require 'alfred_rails/engine'
 require 'alfred_rails/configuration'
 require 'alfred_rails/mock'
 require 'alfred_rails/registry'
