@@ -102,7 +102,7 @@ After defining and generating Alfred fixtures they are accessible in your JavaSc
 
 ```coffeescript
 # Get request response
-Alfred.serve('posts/update', 'update post by manager')
+Alfred.serve('posts_controller/update', 'update post by manager')
 
 # Example of a test
 describe 'PostModel', ->
@@ -110,7 +110,7 @@ describe 'PostModel', ->
   describe '#update', ->
 
     it 'should update model', ->
-      response  = Alfred.serve('posts/update', 'update post by manager')
+      response  = Alfred.serve('posts_controller/update', 'update post by manager')
       @server   = sinon.fakeServer.create()
 
       @server.respondWith 'PATCH', 'posts/1', [200, { 'Content-Type': 'application/json' }, response]
@@ -127,7 +127,7 @@ Implementation on this differs on which libraries you are using to test with. In
 
 ```coffeescript
 # Creates fake server and calls respondWith
-Alfred.SinonAdapter.serve('posts/update', 'update post by manager')
+Alfred.SinonAdapter.serve('posts_controller/update', 'update post by manager')
 
 # Example of a test
 describe 'PostModel', ->
@@ -135,7 +135,7 @@ describe 'PostModel', ->
   describe '#update', ->
 
     it 'should update model', ->
-      @server = Alfred.SinonAdapter.serve('posts/update', 'update post by manager')
+      @server = Alfred.SinonAdapter.serve('posts_controller/update', 'update post by manager')
 
       @post.update()
       @server.respond()
