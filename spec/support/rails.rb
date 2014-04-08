@@ -11,4 +11,3 @@ module AlfredRailsTest
     end
   end
 end
-AlfredRailsTest::Application.initialize!
