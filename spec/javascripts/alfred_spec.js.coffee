@@ -13,7 +13,12 @@ describe 'Alfred', ->
       type:   'application/json'
     }
 
-    Alfred.register(@action, @name, @meta, @response)
+    Alfred.register({
+      action:   @action,
+      name:     @name,
+      meta:     @meta,
+      response: @response
+    })
 
     @scenario = Alfred.scenarios[@action][@name]
 
