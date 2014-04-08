@@ -35,7 +35,8 @@ module Alfred
           :include    => 'Devise::TestHelpers'
         }, {
           :class_name => 'FactoryGirl',
-          :include    => 'FactoryGirl::Syntax::Methods'
+          :include    => 'FactoryGirl::Syntax::Methods',
+          :require    => 'factory_girl'
         }
       ]
 
@@ -59,6 +60,16 @@ module Alfred
             end
           end
           includes
+        end
+
+        def requires
+          requires = []
+          INCLUDES.each do |mod|
+            if send("#{mod[:class_name].underscore}_defined?")
+              requires << "require \"#{mod[:require]}\"" if mod[:require]
+            end
+          end
+          requires
         end
 
         def mock_with

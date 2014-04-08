@@ -1,5 +1,9 @@
+require 'database_cleaner'
 DatabaseCleaner.strategy = :truncation
 
+<% if requires.any? -%>
+<%= requires.join("\n  ") << "\n" %>
+<% end -%>
 Alfred.configure do |config|
   <% if includes.any? -%>
 <%= "## We detected the following libraries. Remove them if you don't want to use them." %>

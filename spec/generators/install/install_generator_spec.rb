@@ -45,6 +45,12 @@ describe Alfred::Generators::InstallGenerator do
       subject.should include('config.include FactoryGirl::Syntax::Methods')
     end
 
+    it 'should require "factory_girl" if FactoryGirl is defined?' do
+      Alfred::Generators::InstallGenerator.any_instance.stub(:factory_girl_defined?).and_return(true)
+      run_generator
+      subject.should include('require "factory_girl"')
+    end
+
   end
 
 end
