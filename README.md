@@ -29,7 +29,7 @@ Installation
 
 1. Add `gem 'alfred_rails', '~> 1.0.0'` to your Gemfile (inside test group).
 2. Run `bundle install`.
-3. Run `rails g alfred:install` 
+3. Run `rails g alfred:install`.
 
 Defining scenario's
 ------------
@@ -69,7 +69,11 @@ Alfred.define do
   end
 end
 ```
-Will create `spec/javascripts/fixtures/api/v1/posts/update/update_by_manager.js`
+
+This will create a fixture file which you can use in your javascript tests at:
+```
+spec/javascripts/fixtures/api/v1/posts/update/update_by_manager.js
+```
 
 Configuration
 ------------
