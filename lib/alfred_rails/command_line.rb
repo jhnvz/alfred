@@ -10,38 +10,7 @@ module Alfred
       @options[:files] = parse_options
 
       load!
-      STDOUT.print(message)
       ::Alfred::Runner.new(@options[:files])
-    end
-
-    ##
-    # Parses the options and returns the files if present.
-    #
-    # === Returns
-    #
-    # [files (Array)] the files to run
-    #
-    def parse_options
-      options = {}
-      OptionParser.new do |options|
-        options.banner = "Usage: alfred [options] [files]\n"
-
-        options.on "-v", "--version", "Display the version.", proc {
-          STDOUT.print("#{Alfred::VERSION}\n")
-          exit
-        }
-      end.parse!
-    end
-
-    ##
-    # Load Rails environment and Alfred.
-    #
-    def load!
-      load 'config/application.rb'
-      ::Rails.application.initialize!
-
-      require 'alfred_rails'
-      ::Alfred.load!
     end
 
     ##
@@ -55,18 +24,33 @@ module Alfred
     private
 
       ##
-      # Info to prepend for STDOUT prints.
+      # Parses the options and returns the files if present.
       #
-      def info_for_stdout
-        "#{Time.now.strftime('%H:%M:%S')} - INFO - "
+      # === Returns
+      #
+      # [files (Array)] the files to run
+      #
+      def parse_options
+        options = {}
+        OptionParser.new do |options|
+          options.banner = "Usage: alfred [options] [files]\n"
+
+          options.on "-v", "--version", "Display the version.", proc {
+            STDOUT.print("#{Alfred::VERSION}\n")
+            exit
+          }
+        end.parse!
       end
 
       ##
-      # Displays a message about which controllers are run.
+      # Load Rails environment and Alfred.
       #
-      def message
-        message = @options[:files].empty? ? "all scenario's" : @options[:files].join(' ')
-        "#{info_for_stdout}Alfred: Running #{message}\n"
+      def load!
+        load 'config/application.rb'
+        ::Rails.application.initialize!
+
+        require 'alfred_rails'
+        ::Alfred.load!
       end
 
   end # CommandLine

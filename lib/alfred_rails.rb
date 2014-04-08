@@ -1,5 +1,5 @@
 require 'alfred_rails/version'
-require 'alfred_rails/engine'
+require 'alfred_rails/rails'
 require 'alfred_rails/configuration'
 require 'alfred_rails/mock'
 require 'alfred_rails/registry'
@@ -9,6 +9,7 @@ require 'alfred_rails/fixture_file'
 require 'alfred_rails/scenario_dsl'
 require 'alfred_rails/request'
 require 'alfred_rails/runner'
+require 'alfred_rails/ui'
 
 require 'active_support'
 require 'database_cleaner'
@@ -90,13 +91,5 @@ module Alfred
     end
 
   end # class << self
-
-  module Rails
-    class Railtie < ::Rails::Railtie
-      rake_tasks do
-        load "tasks/alfred.rake"
-      end
-    end # Railtie
-  end # Rails
 
 end # Alfred
