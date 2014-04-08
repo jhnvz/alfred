@@ -34,7 +34,7 @@ Installation
 Defining scenario's
 ------------
 
-For example:
+You can create an empty scenario definition by running: `rails g alfred:controller api/v1/posts`
 
 ```ruby
 # spec/alfreds/api/v1/posts_controller.rb
