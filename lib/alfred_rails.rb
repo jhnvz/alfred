@@ -50,13 +50,11 @@ module Alfred
     #     c.include Devise::TestHelpers
     #
     #     c.before do
-    #       # Do not use multi-tenancy in tests
-    #       Apartment::Database.stub(:create).and_return(true)
-    #       Apartment::Database.stub(:switch).and_return(true)
-    #       Apartment::Database.stub(:drop).and_return(true)
+    #       DatabaseCleaner.clean
     #     end
     #
     #     c.mock_with :rspec
+    #
     #     c.fixture_path 'spec/fixtures'
     #   end
     #
@@ -65,15 +63,23 @@ module Alfred
     end
 
     ##
-    # Loads the configuration and scenario's
+    # Loads the configuration
     #
-    def load!
+    def load_configuration!
       ## Load configuration
       Dir["spec/alfred_helper.rb"].each { |f| load f }
       Dir["test/alfred_helper.rb"].each { |f| load f }
+    end
+
+    ##
+    # Loads the configuration and scenario's
+    #
+    def load!
+      load_configuration!
 
       ## Load scenario's
       Dir["spec/alfreds/**/*.rb"].each { |f| load f }
+      Dir["test/alfreds/**/*.rb"].each { |f| load f }
     end
 
     ##

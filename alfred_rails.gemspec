@@ -31,6 +31,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'database_cleaner'
   gem.add_dependency 'ruby-progressbar'
+  gem.add_dependency 'ammeter'
 
   if RUBY_VERSION > '1.9.2'
     gem.add_dependency 'rails', '>= 3.2.0'
