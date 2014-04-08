@@ -34,8 +34,12 @@ Installation
 Defining scenario's
 ------------
 
-You can create an empty scenario definition by running: `rails g alfred:controller api/v1/posts`
+You can create empty definitions by running: 
+```
+$ rails g alfred:controller api/v1/posts
+```
 
+Here's an example of a definition:
 ```ruby
 # spec/alfreds/api/v1/posts_controller.rb
 
@@ -95,8 +99,6 @@ Configuration instructions
 
 Javascript testing
 ------------
-
-Javascript testing instructions
 
 After defining and generating Alfred fixtures they are accessible in your JavaScript tests.
 
