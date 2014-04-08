@@ -72,40 +72,15 @@ module Alfred
       save!
     end
 
-    ##
-    # Returns the path name to save the fixture.
-    #
-    def path
-      "#{Alfred.fixture_path}/#{controller_name}/#{action}"
-    end
-
-    ##
-    # Returns the folder name to save the fixture.
-    #
-    def filename
-      "#{path}/#{name}.#{format}"
-    end
-
-    ##
-    # Returns the file format for response content type.
-    #
-    def format
-      case @response.content_type
-      when 'application/json' then 'json'
-      when 'application/html' then 'html'
-      when 'application/xml'  then 'xml'
-      end
+    def file
+      @file ||= FixtureFile.new(@response, controller_name, action, name)
     end
 
     ##
     # Persist the response on disk.
     #
     def save
-      FileUtils.mkdir_p(path)
-
-      File.open(filename, 'w') do |fixture|
-        fixture.write(@response.body)
-      end
+      file.save
     end
     alias :save! :save
 

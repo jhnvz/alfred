@@ -40,14 +40,19 @@ class @Alfred
    * @response {String} Scenario response
    *
    * @example
-   * Alfred.register('sessions/current', 'default', { path: 'api/1/sessions', method: 'GET' }, response)
+   * Alfred.register({
+   *   action:   'sessions/current',
+   *   name:     'default',
+   *   meta:     { path: 'api/1/sessions', method: 'GET' },
+   *   response: @response
+   * })
    *
    ###
-  @register: (action, name, meta, response) ->
-    @scenarios[action] ||= {}
-    @scenarios[action][name] = {
-      name:     name
-      action:   action
-      meta:     meta
-      response: response
+  @register: (object) ->
+    @scenarios[object.action] ||= {}
+    @scenarios[object.action][object.name] = {
+      name:     object.name
+      action:   object.action
+      meta:     object.meta
+      response: object.response
     }
