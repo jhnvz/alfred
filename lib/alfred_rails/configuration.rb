@@ -139,15 +139,11 @@ module Alfred
       # It guesses fixture_path and mocking framework.
       #
       def load_defaults!
-        ## Guess fixture_path
-        @config[:fixture_path] = if rspec_defined?
-          "#{::Rails.root}/spec/javascripts/fixtures"
-        else
-          "#{::Rails.root}/test/javascripts/fixtures"
-        end
-
         ## Guess test path
         @config[:test_path] = rspec_defined? ? "spec" : "test"
+
+        ## Guess fixture_path
+        @config[:fixture_path] = "#{::Rails.root}/#{test_path}/javascripts/fixtures"
 
         ## Guess mocking framework
         @config[:mock_with] = if rspec_defined?

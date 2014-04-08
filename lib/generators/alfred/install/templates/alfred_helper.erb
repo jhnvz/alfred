@@ -1,11 +1,14 @@
+DatabaseCleaner.strategy = :truncation
+
 Alfred.configure do |config|
   <% if includes.any? -%>
-<%= "## Includes" %>
+<%= "## We detected the following libraries. Remove them if you don't want to use them." %>
   <%= includes.join("\n  ") << "\n" %>
 <% end -%>
   ## Setup
   config.setup do
     ## Runs before every scenario
+    DatabaseCleaner.clean
   end
 
   ## Mocking framework

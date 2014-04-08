@@ -7,20 +7,32 @@ module Alfred
 
       ##
       # Define method for checking presence of a module.
+      # Will also include module in config.
       #
       # === Examples
       #
       #   INCLUDES = [{ :class_name => 'Devise', :include => 'Devise::TestHelpers' }]
       #
-      #   Will define the following method:
+      # Will define the following method:
       #
       #   def devise_enabled?
       #     defined?(Devise)
       #   end
       #
+      # Adds the following code to config:
+      #
+      #   config.include Devise::TestHelpers
+      #
+      # === Current value:
+      #
       INCLUDES = [
-        { :class_name => 'Devise',      :include => 'Devise::TestHelpers' },
-        { :class_name => 'FactoryGirl', :include => 'FactoryGirl::Syntax::Methods' }
+        {
+          :class_name => 'Devise',
+          :include    => 'Devise::TestHelpers'
+        }, {
+          :class_name => 'FactoryGirl',
+          :include    => 'FactoryGirl::Syntax::Methods'
+        }
       ]
 
       def self.source_root
@@ -39,19 +51,12 @@ module Alfred
           end
         end
 
-        ##
-        # Tries to include modules defined in INCLUDES.
-        #
-        # === Examples
-        #
-        #   INCLUDES = [{ :class_name => 'Devise', :include => 'Devise::TestHelpers' }]
-        #
-        #   # Will include: "config.include Devise::TestHelpers"
-        #
         def includes
           includes = []
           INCLUDES.each do |mod|
-            includes << "config.include #{mod[:include]}" if send("#{mod[:class_name].underscore}_defined?")
+            if send("#{mod[:class_name].underscore}_defined?")
+              includes << "config.include #{mod[:include]}"
+            end
           end
           includes
         end
