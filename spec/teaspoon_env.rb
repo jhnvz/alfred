@@ -1,5 +1,6 @@
-require File.expand_path('../support/application', __FILE__)
+require 'rails/all'
 require 'teaspoon'
+require File.expand_path('../support/application', __FILE__)
 
 Teaspoon.setup do |config|
   config.mount_at     = '/teaspoon'
