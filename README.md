@@ -154,14 +154,23 @@ Alfred.fetch('posts/update', 'update post by manager') # => Object
 Guard
 ------------
 
+Add the gem to your Gemfile (inside development group):
+``` ruby
+ gem 'guard-alfred', :require => false
+```
+
+Add guard definition to your Guardfile by running this command:
+```
+$ guard init alfred
+```
+
+Make sure to put this block on top of your Guardfile so all fixtures are created before running tests.
 ```ruby
 guard :alfred do
   watch(%r{^app/controllers/(.+)\.rb$}) { |m| "spec/alfreds/#{m[1]}.rb" }
   watch(%r{^spec/alfreds/(.+)\.rb$})    { |m| "spec/alfreds/#{m[1]}.rb" }
 end
 ```
-
-Here goes the instruction to setup Alfred with Guard.
 
 Supported Ruby Versions
 ------------
