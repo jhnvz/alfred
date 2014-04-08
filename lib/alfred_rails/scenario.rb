@@ -97,6 +97,9 @@ module Alfred
         "#{path}/#{name.underscore}.js"
       end
 
+      ##
+      # Saves the fixture.
+      #
       def save
         FileUtils.mkdir_p(path)
 
@@ -105,10 +108,16 @@ module Alfred
         end
       end
 
+      ##
+      # Outputs the content to a JavaScript format wrapped around Alfred.register JavaScript method
+      #
       def to_js
         "Alfred.register(#{content.to_json})"
       end
 
+      ##
+      # Scenario content with meta data outputted as a hash.
+      #
       def content
         {
           :name     => name,
@@ -118,6 +127,9 @@ module Alfred
         }
       end
 
+      ##
+      # Scenario meta data, such as path, method, status and content type
+      #
       def meta
         {
           :path   => response.request.fullpath,
