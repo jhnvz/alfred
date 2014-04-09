@@ -31,7 +31,7 @@ Resources
 Installation
 ------------
 
-1. Add `gem 'alfred_rails', '~> 1.0.0'` to your Gemfile (inside test group).
+1. Add `gem 'alfred_rails'` to your Gemfile (inside test group).
 2. Run `bundle install`.
 3. Run `rails g alfred:install`.
 
