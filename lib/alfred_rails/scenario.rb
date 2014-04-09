@@ -40,7 +40,7 @@ module Alfred
     #
     def run
       setup_request
-      apply_setup
+      perform_setup
       perform_request
 
       ## Persist response to disk
@@ -72,9 +72,9 @@ module Alfred
       end
 
       ##
-      # Apply global and scenario setups to request.
+      # Perform global and scenario setups to request.
       #
-      def apply_setup
+      def perform_setup
         ## Run global setup before example
         Alfred.configuration.setup.each do |setup|
           @request._setup(&setup)
