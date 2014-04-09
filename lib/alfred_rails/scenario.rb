@@ -44,7 +44,7 @@ module Alfred
       perform_request
 
       ## Persist response to disk
-      file.save!
+      file.save
     end
 
     ##

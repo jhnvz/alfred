@@ -85,7 +85,7 @@ module Alfred
       #
       def start_message
         message = @matches ? @matches.join(' ') : "all scenario's"
-        UI.info("Alfred: Running #{message}", :empty_line_before => true)
+        UI.info("Alfred: Serving #{message}", :empty_line_before => true)
       end
 
       ##
@@ -108,7 +108,7 @@ module Alfred
           message.queue(scenario.file.filename) # Add filename to the message queue
         end
 
-        message.queue('Alfred generated the following fixtures:', :timestamp => true, :before => true)
+        message.queue('Alfred served the following fixtures:', :timestamp => true, :before => true)
         message.display
       end
 
