@@ -64,6 +64,15 @@ describe Alfred::Configuration do
 
   end
 
+  describe '#test_path' do
+
+    it 'should set test_path if argument is given' do
+      configuration.test_path 'some/path'
+      configuration.test_path.should == "some/path"
+    end
+
+  end
+
   describe '#include' do
 
     it 'should add modules to include' do

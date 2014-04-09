@@ -47,6 +47,13 @@ module Alfred
       file.save!
     end
 
+    ##
+    # Initialize or return existing file instance.
+    #
+    def file
+      @file ||= FixtureFile.new(@response, controller_name, action, name)
+    end
+
     private
 
       ##
@@ -86,13 +93,6 @@ module Alfred
 
         ## Set response
         @response = request.response
-      end
-
-      ##
-      # Initialize a new file.
-      #
-      def file
-        @file ||= FixtureFile.new(@response, controller_name, action, name)
       end
 
   end # Scenario
