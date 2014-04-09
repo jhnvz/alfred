@@ -4,9 +4,9 @@ module Alfred
 
     class Railtie < ::Rails::Railtie
       rake_tasks do
-        #:nocov:
+        # :nocov:
         load "tasks/alfred.rake"
-        #:nocov:
+        # :nocov:
       end
     end # Railtie
 
