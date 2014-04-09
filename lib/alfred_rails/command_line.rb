@@ -17,8 +17,10 @@ module Alfred
     # Add abort method in case input is aborted.
     #
     def abort(message = nil)
+      # :nocov:
       STDOUT.print(message) if message
       exit(1)
+      # :nocov:
     end
 
     private
@@ -46,11 +48,13 @@ module Alfred
       # Load Rails environment and Alfred.
       #
       def load!
+        # :nocov:
         load 'config/application.rb'
         ::Rails.application.initialize!
 
         require 'alfred_rails'
         ::Alfred.load!
+        # :nocov:
       end
 
   end # CommandLine
