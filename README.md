@@ -187,6 +187,7 @@ guard :alfred do
   watch(%r{^spec/alfreds/(.+)\.rb$})    { |m| "spec/alfreds/#{m[1]}.rb" }
 end
 ```
+Please read [Guard usage doc](https://github.com/guard/guard#readme) for usage instructions.
 
 Supported Ruby Versions
 ------------
