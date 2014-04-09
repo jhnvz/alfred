@@ -67,7 +67,6 @@ module Alfred
     # Loads the configuration
     #
     def load_configuration!
-      ## Load configuration
       Dir["spec/alfred_helper.rb"].each { |f| load f }
       Dir["test/alfred_helper.rb"].each { |f| load f }
     end
@@ -81,6 +80,11 @@ module Alfred
       ## Load scenario's
       Dir["spec/alfreds/**/*.rb"].each { |f| load f }
       Dir["test/alfreds/**/*.rb"].each { |f| load f }
+
+      ## Include modules from configuration
+      Alfred.configuration.includes.each do |mod|
+        Request.send(:include, mod)
+      end
     end
 
     ##

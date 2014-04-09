@@ -39,50 +39,61 @@ module Alfred
     # Runs the scenario.
     #
     def run
-      controller.send(:include, ::Rails.application.routes.url_helpers)
-
-      ## Initialize mocking framework
-      Alfred::Mock.new
-
-      ## Include modules from configuration
-      Alfred.configuration.includes.each do |mod|
-        Request.send(:include, mod)
-      end
-
-      ## Setup request
-      request = Request.new(name)
-      request.set_controller(controller)
-      request.setup_controller_request_and_response
-
-      ## Run global setup before example
-      Alfred.configuration.setup.each do |setup|
-        request._setup(&setup)
-      end
-
-      ## Run setup blocks for scenario
-      setups.each { |setup| request._setup(&setup) }
-
-      ## Perform request
-      request.send(method, action, params)
-
-      ## Set response
-      @response = request.response
+      setup_request
+      apply_setup
+      perform_request
 
       ## Persist response to disk
-      save!
+      file.save!
     end
 
-    def file
-      @file ||= FixtureFile.new(@response, controller_name, action, name)
-    end
+    private
 
-    ##
-    # Persist the response on disk.
-    #
-    def save
-      file.save
-    end
-    alias :save! :save
+      ##
+      # Initialize a new Request.
+      #
+      def setup_request
+        controller.send(:include, ::Rails.application.routes.url_helpers)
+
+        ## Initialize mocking framework
+        Alfred::Mock.new
+
+        ## Setup request
+        @request = Request.new(name)
+        @request.set_controller(controller)
+        @request.setup_controller_request_and_response
+      end
+
+      ##
+      # Apply global and scenario setups to request.
+      #
+      def apply_setup
+        ## Run global setup before example
+        Alfred.configuration.setup.each do |setup|
+          @request._setup(&setup)
+        end
+
+        ## Run setup blocks for scenario
+        setups.each { |setup| @request._setup(&setup) }
+      end
+
+      ##
+      # Perform request and assign response.
+      #
+      def perform_request
+        ## Perform request
+        @request.send(method, action, params)
+
+        ## Set response
+        @response = request.response
+      end
+
+      ##
+      # Initialize a new file.
+      #
+      def file
+        @file ||= FixtureFile.new(@response, controller_name, action, name)
+      end
 
   end # Scenario
 end # Alfred
