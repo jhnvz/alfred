@@ -6,7 +6,17 @@
 
 ## Alfred Rails
 
-[![Gem Version](https://badge.fury.io/rb/alfred_rails.png)](http://badge.fury.io/rb/alfred_rails) [![Build Status](https://secure.travis-ci.org/jhnvz/alfred_rails.png?branch=master)](http://travis-ci.org/jhnvz/alfred_rails) [![Coverage Status](https://coveralls.io/repos/jhnvz/alfred_rails/badge.png?branch=master)](https://coveralls.io/r/jhnvz/alfred_rails) [![Code Climate](https://codeclimate.com/github/jhnvz/alfred_rails.png)](https://codeclimate.com/github/jhnvz/alfred_rails) [![Dependency Status](https://gemnasium.com/jhnvz/alfred_rails.png)](https://gemnasium.com/jhnvz/alfred_rails)
+[![Gem Version](http://img.shields.io/gem/v/alfred_rails.svg)][gem]
+[![Build Status](http://img.shields.io/travis/jhnvz/alfred_rails.svg)][travis]
+[![Coverage Status](http://img.shields.io/coveralls/jhnvz/alfred_rails.svg)][coveralls]
+[![Code Climate](http://img.shields.io/codeclimate/github/jhnvz/alfred_rails.svg)][codeclimate]
+[![Dependency Status](http://img.shields.io/gemnasium/jhnvz/alfred_rails.svg)][gemnasium]
+
+[gem]: https://rubygems.org/gems/alfred_rails
+[travis]: http://travis-ci.org/jhnvz/alfred_rails
+[coveralls]: https://coveralls.io/r/jhnvz/alfred_rails
+[codeclimate]: https://codeclimate.com/github/jhnvz/alfred_rails
+[gemnasium]: https://gemnasium.com/jhnvz/alfred_rails
 
 Serves controller action responses under several conditions.
 
