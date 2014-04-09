@@ -23,11 +23,12 @@ describe Alfred::CommandLine do
   describe '#initialize' do
 
     before do
-      subject.any_instance.stub(:load!).and_return(true)
+      subject.any_instance.stub(:load_rails!).and_return(true)
     end
 
     it "should load rails environment and scenario's" do
-      subject.any_instance.should_receive(:load!)
+      subject.any_instance.should_receive(:load_rails!)
+      Alfred.should_receive(:load!)
       subject.new
     end
 

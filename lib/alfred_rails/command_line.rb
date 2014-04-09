@@ -9,7 +9,11 @@ module Alfred
       @options = {}
       @options[:files] = parse_options
 
-      load!
+      load_rails!
+
+      require 'alfred_rails'
+      ::Alfred.load!
+
       ::Alfred::Runner.new(@options[:files])
     end
 
@@ -47,13 +51,10 @@ module Alfred
       ##
       # Load Rails environment and Alfred.
       #
-      def load!
+      def load_rails!
         # :nocov:
         load 'config/application.rb'
         ::Rails.application.initialize!
-
-        require 'alfred_rails'
-        ::Alfred.load!
         # :nocov:
       end
 
