@@ -92,7 +92,7 @@ module Alfred
         @request.send(method, action, params)
 
         ## Set response
-        @response = request.response
+        @response = @request.response
       end
 
   end # Scenario
