@@ -1,9 +1,3 @@
-------------
-:warning: **This repository is still under development** :warning:
-
-------------
-
-
 ## Alfred Rails
 
 [![Gem Version](http://img.shields.io/gem/v/alfred_rails.svg)][gem]
