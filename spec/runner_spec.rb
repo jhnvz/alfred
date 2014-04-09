@@ -170,7 +170,7 @@ describe Alfred::Runner do
 
       it 'should notify about running all files' do
         subject
-        @log.should include("Running all scenario's")
+        @log.should include("Serving all scenario's")
       end
     end
 

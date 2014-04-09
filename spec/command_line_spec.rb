@@ -56,7 +56,7 @@ describe Alfred::CommandLine do
     it "has --version" do
       suppress_warnings { ARGV = ["--version"] }
       expect { subject.new.parse_options }.to raise_error SystemExit
-      expect(@log).to match(/\d+\.\d+\.\d+\n/)
+      expect(@log).to match(/\d+\.\d+\.\d+\.*./)
     end
 
   end
