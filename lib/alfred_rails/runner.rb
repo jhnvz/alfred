@@ -3,6 +3,8 @@ require 'ruby-progressbar'
 module Alfred
   class Runner
 
+    attr_accessor :files, :controllers, :matches, :scenarios
+
     ##
     # Initialize a new runner and find and run scenario's.
     # Runs al scenarios if files are empty.
@@ -13,17 +15,21 @@ module Alfred
     #
     # === Example
     #
+    # Run specific scenario's:
+    #
     #   Runner.new(['spec/alfreds/some_controller.rb'])
     #   #=> Will run scenario's for some_controller
+    #
+    # Run all scenario's:
     #
     #   Runner.new
     #   #=> Will run all scenario's
     #
     def initialize(files=[])
-      @files             = files
-      @controllers       = controllers_for_files
-      @found_controllers = found_controllers
-      @scenarios         = scenarios_for_controllers
+      @files       = files
+      @controllers = controllers_for_files
+      @matches     = matches_for_controllers
+      @scenarios   = scenarios_for_controllers
 
       run if @scenarios.any?
     end
@@ -62,20 +68,23 @@ module Alfred
       ##
       # Returns controllers found in registry.
       #
-      def found_controllers
+      def matches_for_controllers
         if @controllers
-          found = []
+          matches = []
           @controllers.each do |controller|
             if Alfred.registry.registered?(controller)
-              found << "#{Alfred.configuration.test_path}/alfreds/#{controller}.rb"
+              matches << "#{Alfred.configuration.test_path}/alfreds/#{controller}.rb"
             end
           end
-          found
+          matches
         end
       end
 
+      ##
+      # Display runner start message.
+      #
       def start_message
-        message = @found_controllers ? @found_controllers.join(' ') : "all scenario's"
+        message = @matches ? @matches.join(' ') : "all scenario's"
         UI.info("Alfred: Running #{message}", :empty_line_before => true)
       end
 
