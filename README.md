@@ -1,6 +1,6 @@
 ## Alfred
 
-[![Gem Version](http://img.shields.io/gem/v/alfred.svg)][gem]
+[![Gem Version](http://img.shields.io/gem/v/alfred_rails.svg)][gem]
 [![Build Status](http://img.shields.io/travis/jhnvz/alfred.svg)][travis]
 [![Coverage Status](http://img.shields.io/coveralls/jhnvz/alfred.svg)][coveralls]
 [![Code Climate](http://img.shields.io/codeclimate/github/jhnvz/alfred.svg)][codeclimate]
