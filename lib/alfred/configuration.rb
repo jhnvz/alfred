@@ -125,6 +125,19 @@ module Alfred
       config[:mock_with] = framework
     end
 
+    MOCKING_ADAPTERS = {
+      :rspec    => :RSpec,
+      :flexmock => :Flexmock,
+      :rr       => :RR,
+      :mocha    => :Mocha,
+      :nothing  => :Null
+    }
+
+    def mock_framework
+      adapter = MOCKING_ADAPTERS[mock_with]
+      "Alfred::MockingAdapters::#{adapter}".constantize
+    end
+
     private
 
       ##

@@ -62,13 +62,11 @@ module Alfred
       def setup_request
         controller.send(:include, ::Rails.application.routes.url_helpers)
 
-        ## Initialize mocking framework
-        Alfred::Mock.new
-
         ## Setup request
         @request = Request.new(name)
         @request.set_controller(controller)
         @request.setup_controller_request_and_response
+        @request.setup_mocks
       end
 
       ##
@@ -93,6 +91,9 @@ module Alfred
 
         ## Set response
         @response = @request.response
+
+        ## Teardown mocks
+        @request.teardown_mocks
       end
 
   end # Scenario
