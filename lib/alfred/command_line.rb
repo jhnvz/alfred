@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 require "optparse"
+require 'method_profiler'
 
 module Alfred
   class CommandLine
@@ -12,9 +13,31 @@ module Alfred
       load_rails!
 
       require 'alfred'
-      ::Alfred.load!
 
+      alfred        = MethodProfiler.observe(::Alfred)
+      configuration = MethodProfiler.observe(::Alfred::Configuration)
+      definition    = MethodProfiler.observe(::Alfred::Definition)
+      scenario_dsl  = MethodProfiler.observe(::Alfred::ScenarioDSL)
+      scenario      = MethodProfiler.observe(::Alfred::Scenario)
+      fixture_file  = MethodProfiler.observe(::Alfred::FixtureFile)
+      registry      = MethodProfiler.observe(::Alfred::Registry)
+      request       = MethodProfiler.observe(::Alfred::Request)
+      runner        = MethodProfiler.observe(::Alfred::Runner)
+      ui            = MethodProfiler.observe(::Alfred::UI)
+
+      ::Alfred.load!
       ::Alfred::Runner.new(@options[:files])
+
+      ::Alfred::UI.info(alfred.report.to_s, :empty_line_before => true)
+      ::Alfred::UI.info(configuration.report.to_s, :empty_line_before => true)
+      ::Alfred::UI.info(definition.report.to_s, :empty_line_before => true)
+      ::Alfred::UI.info(scenario_dsl.report.to_s, :empty_line_before => true)
+      ::Alfred::UI.info(scenario.report.to_s, :empty_line_before => true)
+      ::Alfred::UI.info(fixture_file.report.to_s, :empty_line_before => true)
+      ::Alfred::UI.info(registry.report.to_s, :empty_line_before => true)
+      ::Alfred::UI.info(request.report.to_s, :empty_line_before => true)
+      ::Alfred::UI.info(runner.report.to_s, :empty_line_before => true)
+      ::Alfred::UI.info(ui.report.to_s, :empty_line_before => true)
     end
 
     ##
