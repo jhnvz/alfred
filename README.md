@@ -115,8 +115,6 @@ Alfred.configure do |config|
 end
 ```
 
-Configuration instructions
-
 Javascript testing
 ------------
 
