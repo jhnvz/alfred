@@ -12,87 +12,32 @@
 [codeclimate]: https://codeclimate.com/github/jhnvz/alfred
 [gemnasium]: https://gemnasium.com/jhnvz/alfred
 
-Serves controller action responses under several conditions.
+## Latest performance reports:
 
-How it works
-------------
-
-Alfred creates fixture files of your controller responses so you can use them in your tests. Ideal if your app's client is build with a javascript framework and you want to test responses under several conditions.
-
-Resources
-------------
-
-- [Installation](#installation)
-- [Defining scenario's](#defining-scenarios)
-- [Configuration](#configuration)
-- [Javascript testing](#javascript-testing)
-- [Guard](#guard)
-
-Installation
-------------
-
-1. Add `gem 'alfred_rails'` to your Gemfile (inside test group).
-2. Run `bundle install`.
-3. Run `rails g alfred:install`.
-
-Defining scenario's
-------------
-
-You can create empty definitions by running:
-```
-$ rails g alfred:controller api/v1/posts
-```
-
-Here's an example of a definition:
+### Configuration:
 ```ruby
-# spec/alfreds/api/v1/posts_controller.rb
+require 'database_cleaner'
+DatabaseCleaner.strategy = :truncation
 
-Alfred.define do
-  setup do
-    sign_in :user, create(:user)
-  end
-
-  controller Api::V1::PostsController do
-    scenario 'update post by manager' do
-      setup do
-        create(:post, :title => 'Alfred is awesome', :body => 'It saves me time')
-      end
-
-      patch :update, {
-        :format => :json,
-        :id     => 1,
-        :post   => {
-          :title => 'Alfred rocks!'
-        }
-      }
-    end
-  end
-
-  scenario 'update post by manager' do
-    controller Api::V1::PostsController
-  end
-end
-```
-
-This will create a fixture file which you can use in your javascript tests at:
-```
-spec/javascripts/fixtures/api/v1/posts/update/update_by_manager.js
-```
-
-Configuration
-------------
-
-```ruby
-# spec/alfred_helper.rb
+require "factory_girl"
 
 Alfred.configure do |config|
-  ## Includes
-  config.include FactoryGirl::Syntax::Methods
+  ## We detected the following libraries. Remove them if you don't want to use them.
   config.include Devise::TestHelpers
+  config.include FactoryGirl::Syntax::Methods
 
   ## Setup
   config.setup do
+    ## Runs before every scenario
+    DatabaseCleaner.clean
+
     Apartment::Database.stub(:create).and_return(true)
+    Apartment::Database.stub(:switch).and_return(true)
+    Apartment::Database.stub(:drop).and_return(true)
+
+    Api::ApplicationController.any_instance
+      .stub(:current_company)
+      .and_return(create(:company))
   end
 
   ## Mocking framework
@@ -103,107 +48,157 @@ Alfred.configure do |config|
 end
 ```
 
-Configuration instructions
-
-Javascript testing
-------------
-
-After defining and generating Alfred fixtures they are accessible in your JavaScript tests.
-
-```coffeescript
-# Get request response
-Alfred.serve('posts_controller/update', 'update post by manager')
-
-# Example of a test
-describe 'PostModel', ->
-
-  describe '#update', ->
-
-    it 'should update model', ->
-      response  = Alfred.serve('posts_controller/update', 'update post by manager')
-      @server   = sinon.fakeServer.create()
-
-      @server.respondWith 'PATCH', 'posts/1', [200, { 'Content-Type': 'application/json' }, response]
-
-      @post.update()
-      @server.respond()
-
-      @post.updated().should.equal(true)
-```
-
-Implementation on this differs on which libraries you are using to test with. In the above example we're using SinonJS to create a fake server response.
-
-### SinonJS adapter
-
-```coffeescript
-# Creates fake server and calls respondWith
-Alfred.SinonAdapter.serve('posts_controller/update', 'update post by manager')
-
-# Example of a test
-describe 'PostModel', ->
-
-  describe '#update', ->
-
-    it 'should update model', ->
-      @server = Alfred.SinonAdapter.serve('posts_controller/update', 'update post by manager')
-
-      @post.update()
-      @server.respond()
-
-      @post.updated().should.equal(true)
-```
-
-### Using any other test adapter
-
-By calling `Alfred.fetch` you can fetch a scenario object with meta data, such as path, request method etc. This can be useful when stubbing a request;
-
-```coffeescript
-Alfred.fetch('posts/update', 'update post by manager') # => Object
-```
-
-Guard
-------------
-
-Add the gem to your Gemfile (inside development group):
-``` ruby
- gem 'guard-alfred', :require => false
-```
-
-Add guard definition to your Guardfile by running this command:
-```
-$ guard init alfred
-```
-
-Make sure to put this block on top of your Guardfile so all fixtures are created before running tests.
+### Scenario
 ```ruby
-guard :alfred do
-  watch(%r{^app/controllers/(.+)\.rb$}) { |m| "spec/alfreds/#{m[1]}.rb" }
-  watch(%r{^spec/alfreds/(.+)\.rb$})    { |m| "spec/alfreds/#{m[1]}.rb" }
+Alfred.define do
+  controller Api::V1::SessionsController do
+    scenario "employee signed in" do
+      setup do
+        employee = create(:employee)
+        sign_in :employee, employee
+      end
+
+      get :current, :format => :json
+    end
+  end
 end
 ```
-Please read [Guard usage doc](https://github.com/guard/guard#readme) for usage instructions.
 
-Supported Ruby Versions
-------------
+### Results
 
-This library is tested against Travis and aims to support the following Ruby
-implementations:
+```
+$ alfred
 
-* Ruby 1.9.3
-* Ruby 2.0.0
-* Ruby 2.1.1
+17:53:55 - INFO - Alfred: Serving all scenario's
+1/1: |======================================================================================================================================================================================| Time: 00:00:00
 
-Contributing
-------------
+17:53:56 - INFO - Alfred served the following fixtures:
+/Users/Johan/Apps/ruby/booqable/spec/javascripts/fixtures/api/v1/sessions_controller/current/employee_signed_in.js
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
 
-Copyright
-------------
+17:53:56 - INFO - MethodProfiler results for: Alfred
++----------------------+-----------+-----------+--------------+------------+-------------+
+| Method               | Min Time  | Max Time  | Average Time | Total Time | Total Calls |
++----------------------+-----------+-----------+--------------+------------+-------------+
+| .load!               | 29.675 ms | 29.675 ms | 29.675 ms    | 29.675 ms  | 1           |
+| .load_configuration! | 16.940 ms | 16.940 ms | 16.940 ms    | 16.940 ms  | 1           |
+| .configure           | 1.529 ms  | 1.529 ms  | 1.529 ms     | 1.529 ms   | 1           |
+| .fixture_path        | 0.156 ms  | 0.173 ms  | 0.163 ms     | 0.488 ms   | 3           |
+| .configuration       | 0.004 ms  | 0.445 ms  | 0.068 ms     | 0.476 ms   | 7           |
+| .registry            | 0.003 ms  | 0.086 ms  | 0.045 ms     | 0.089 ms   | 2           |
++----------------------+-----------+-----------+--------------+------------+-------------+
 
-Copyright (c) 2014 Johan van Zonneveld. See LICENSE for details.
+17:53:56 - INFO - MethodProfiler results for: Alfred::Configuration
++-----------------+----------+----------+--------------+------------+-------------+
+| Method          | Min Time | Max Time | Average Time | Total Time | Total Calls |
++-----------------+----------+----------+--------------+------------+-------------+
+| #initialize     | 0.398 ms | 0.398 ms | 0.398 ms     | 0.398 ms   | 1           |
+| #load_defaults! | 0.341 ms | 0.341 ms | 0.341 ms     | 0.341 ms   | 1           |
+| #test_path      | 0.059 ms | 0.059 ms | 0.059 ms     | 0.059 ms   | 1           |
+| #fixture_path   | 0.050 ms | 0.067 ms | 0.056 ms     | 0.225 ms   | 4           |
+| #mock_with      | 0.050 ms | 0.051 ms | 0.051 ms     | 0.101 ms   | 2           |
+| #setup          | 0.006 ms | 0.007 ms | 0.007 ms     | 0.013 ms   | 2           |
+| #includes       | 0.005 ms | 0.005 ms | 0.005 ms     | 0.005 ms   | 1           |
+| #include        | 0.004 ms | 0.006 ms | 0.005 ms     | 0.010 ms   | 2           |
+| #rspec_defined? | 0.004 ms | 0.005 ms | 0.005 ms     | 0.009 ms   | 2           |
+| #config         | 0.003 ms | 0.005 ms | 0.004 ms     | 0.025 ms   | 7           |
++-----------------+----------+----------+--------------+------------+-------------+
 
+17:53:56 - INFO - MethodProfiler results for: Alfred::Definition
++---------+-----------+-----------+--------------+------------+-------------+
+| Method  | Min Time  | Max Time  | Average Time | Total Time | Total Calls |
++---------+-----------+-----------+--------------+------------+-------------+
+| #define | 11.492 ms | 11.492 ms | 11.492 ms    | 11.492 ms  | 1           |
++---------+-----------+-----------+--------------+------------+-------------+
+
+17:53:56 - INFO - MethodProfiler results for: Alfred::ScenarioDSL
++---------------------+----------+----------+--------------+------------+-------------+
+| Method              | Min Time | Max Time | Average Time | Total Time | Total Calls |
++---------------------+----------+----------+--------------+------------+-------------+
+| #get                | 0.328 ms | 0.328 ms | 0.328 ms     | 0.328 ms   | 1           |
+| #setup_request_data | 0.281 ms | 0.281 ms | 0.281 ms     | 0.281 ms   | 1           |
+| #setup              | 0.096 ms | 0.096 ms | 0.096 ms     | 0.096 ms   | 1           |
+| #initialize         | 0.006 ms | 0.006 ms | 0.006 ms     | 0.006 ms   | 1           |
+| #scenario           | 0.003 ms | 0.007 ms | 0.004 ms     | 0.017 ms   | 4           |
++---------------------+----------+----------+--------------+------------+-------------+
+
+17:53:56 - INFO - MethodProfiler results for: Alfred::Scenario
++------------------+------------+------------+--------------+------------+-------------+
+| Method           | Min Time   | Max Time   | Average Time | Total Time | Total Calls |
++------------------+------------+------------+--------------+------------+-------------+
+| #run             | 448.730 ms | 448.730 ms | 448.730 ms   | 448.730 ms | 1           |
+| #perform_setup   | 385.452 ms | 385.452 ms | 385.452 ms   | 385.452 ms | 1           |
+| #setup_request   | 41.864 ms  | 41.864 ms  | 41.864 ms    | 41.864 ms  | 1           |
+| #perform_request | 18.704 ms  | 18.704 ms  | 18.704 ms    | 18.704 ms  | 1           |
+| #file            | 0.004 ms   | 0.321 ms   | 0.163 ms     | 0.325 ms   | 2           |
+| #controller_name | 0.099 ms   | 0.111 ms   | 0.105 ms     | 0.210 ms   | 2           |
+| #initialize      | 0.022 ms   | 0.022 ms   | 0.022 ms     | 0.022 ms   | 1           |
+| #name            | 0.004 ms   | 0.017 ms   | 0.010 ms     | 0.021 ms   | 2           |
+| #params=         | 0.007 ms   | 0.007 ms   | 0.007 ms     | 0.007 ms   | 1           |
+| #controller=     | 0.007 ms   | 0.007 ms   | 0.007 ms     | 0.007 ms   | 1           |
+| #setups          | 0.004 ms   | 0.007 ms   | 0.005 ms     | 0.011 ms   | 2           |
+| #method          | 0.005 ms   | 0.005 ms   | 0.005 ms     | 0.005 ms   | 1           |
+| #controller      | 0.003 ms   | 0.007 ms   | 0.005 ms     | 0.018 ms   | 4           |
+| #params          | 0.004 ms   | 0.004 ms   | 0.004 ms     | 0.004 ms   | 1           |
+| #method=         | 0.004 ms   | 0.004 ms   | 0.004 ms     | 0.004 ms   | 1           |
+| #action=         | 0.004 ms   | 0.004 ms   | 0.004 ms     | 0.004 ms   | 1           |
+| #action          | 0.004 ms   | 0.004 ms   | 0.004 ms     | 0.008 ms   | 2           |
++------------------+------------+------------+--------------+------------+-------------+
+
+17:53:56 - INFO - MethodProfiler results for: Alfred::FixtureFile
++------------------+----------+----------+--------------+------------+-------------+
+| Method           | Min Time | Max Time | Average Time | Total Time | Total Calls |
++------------------+----------+----------+--------------+------------+-------------+
+| #save            | 2.076 ms | 2.076 ms | 2.076 ms     | 2.076 ms   | 1           |
+| #to_js           | 0.683 ms | 0.683 ms | 0.683 ms     | 0.683 ms   | 1           |
+| #filename        | 0.448 ms | 0.475 ms | 0.462 ms     | 0.923 ms   | 2           |
+| #content         | 0.455 ms | 0.455 ms | 0.455 ms     | 0.455 ms   | 1           |
+| #path            | 0.290 ms | 0.321 ms | 0.304 ms     | 0.913 ms   | 3           |
+| #meta            | 0.208 ms | 0.208 ms | 0.208 ms     | 0.208 ms   | 1           |
+| #initialize      | 0.007 ms | 0.007 ms | 0.007 ms     | 0.007 ms   | 1           |
+| #response        | 0.004 ms | 0.018 ms | 0.007 ms     | 0.034 ms   | 5           |
+| #controller_name | 0.004 ms | 0.013 ms | 0.006 ms     | 0.025 ms   | 4           |
+| #action          | 0.003 ms | 0.004 ms | 0.004 ms     | 0.015 ms   | 4           |
+| #name            | 0.003 ms | 0.004 ms | 0.003 ms     | 0.010 ms   | 3           |
++------------------+----------+----------+--------------+------------+-------------+
+
+17:53:56 - INFO - MethodProfiler results for: Alfred::Registry
++-------------+----------+----------+--------------+------------+-------------+
+| Method      | Min Time | Max Time | Average Time | Total Time | Total Calls |
++-------------+----------+----------+--------------+------------+-------------+
+| #all        | 0.008 ms | 0.008 ms | 0.008 ms     | 0.008 ms   | 1           |
+| #register   | 0.006 ms | 0.006 ms | 0.006 ms     | 0.006 ms   | 1           |
+| #initialize | 0.005 ms | 0.005 ms | 0.005 ms     | 0.005 ms   | 1           |
++-------------+----------+----------+--------------+------------+-------------+
+
+17:53:56 - INFO - MethodProfiler results for: Alfred::Request
++-----------------+-----------+------------+--------------+------------+-------------+
+| Method          | Min Time  | Max Time   | Average Time | Total Time | Total Calls |
++-----------------+-----------+------------+--------------+------------+-------------+
+| #_setup         | 22.129 ms | 363.004 ms | 192.566 ms   | 385.133 ms | 2           |
+| #set_controller | 0.088 ms  | 0.088 ms   | 0.088 ms     | 0.088 ms   | 1           |
++-----------------+-----------+------------+--------------+------------+-------------+
+
+17:53:56 - INFO - MethodProfiler results for: Alfred::Runner
++----------------------------+------------+------------+--------------+------------+-------------+
+| Method                     | Min Time   | Max Time   | Average Time | Total Time | Total Calls |
++----------------------------+------------+------------+--------------+------------+-------------+
+| #initialize                | 450.956 ms | 450.956 ms | 450.956 ms   | 450.956 ms | 1           |
+| #run                       | 450.660 ms | 450.660 ms | 450.660 ms   | 450.660 ms | 1           |
+| #start_message             | 0.326 ms   | 0.326 ms   | 0.326 ms     | 0.326 ms   | 1           |
+| #scenarios_for_controllers | 0.104 ms   | 0.104 ms   | 0.104 ms     | 0.104 ms   | 1           |
+| #controllers_for_files     | 0.006 ms   | 0.006 ms   | 0.006 ms     | 0.006 ms   | 1           |
+| #matches_for_controllers   | 0.005 ms   | 0.005 ms   | 0.005 ms     | 0.005 ms   | 1           |
++----------------------------+------------+------------+--------------+------------+-------------+
+
+17:53:56 - INFO - MethodProfiler results for: Alfred::UI
++-------------+----------+----------+--------------+------------+-------------+
+| Method      | Min Time | Max Time | Average Time | Total Time | Total Calls |
++-------------+----------+----------+--------------+------------+-------------+
+| .info       | 0.253 ms | 0.401 ms | 0.313 ms     | 3.131 ms   | 10          |
+| #queue      | 0.009 ms | 0.110 ms | 0.075 ms     | 0.904 ms   | 12          |
+| #display    | 0.020 ms | 0.071 ms | 0.039 ms     | 0.425 ms   | 11          |
+| #timestamp  | 0.012 ms | 0.039 ms | 0.018 ms     | 0.198 ms   | 11          |
+| #initialize | 0.004 ms | 0.007 ms | 0.005 ms     | 0.059 ms   | 11          |
++-------------+----------+----------+--------------+------------+-------------+
+```
