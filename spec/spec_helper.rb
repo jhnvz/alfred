@@ -13,9 +13,9 @@ require 'rspec'
 require 'ammeter/init'
 require 'rspec/autorun'
 
-## Load alfred_rails
+## Load alfred
 
-require 'alfred_rails'
+require 'alfred'
 
 ## Make sure registry is empty after each example
 

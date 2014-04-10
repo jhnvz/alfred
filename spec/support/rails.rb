@@ -1,6 +1,6 @@
 ENV['RAILS_ENV'] = 'test'
 
-module AlfredRailsTest
+module AlfredTest
   class Application < Rails::Application
     config.eager_load                 = false
     config.active_support.deprecation = :log
@@ -11,4 +11,4 @@ module AlfredRailsTest
     end
   end
 end
-AlfredRailsTest::Application.initialize!
+AlfredTest::Application.initialize!

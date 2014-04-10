@@ -1,14 +1,14 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'alfred_rails/version'
+require 'alfred/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "alfred_rails"
   gem.version       = Alfred::VERSION
   gem.authors       = ['Johan van Zonneveld', 'Arjen Oosterkamp']
   gem.email         = ['johan@vzonneveld.nl', 'mail@arjen.me']
-  gem.homepage      = 'https://github.com/jhnvz/alfred_rails.git'
+  gem.homepage      = 'https://github.com/jhnvz/alfred'
   gem.summary       = %q{Serves controller responses under several conditions.}
   gem.description   = %q{Alfred creates fixture files of your controller responses so you can use them in your tests. Ideal if your app's client is build with a javascript framework and you want to test responses under several conditions.}
   gem.license       = 'MIT'

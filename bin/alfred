@@ -2,5 +2,5 @@
 root = File.expand_path('../../lib', __FILE__)
 $:.unshift(root) unless $:.include?(root)
 
-require "alfred_rails/command_line"
+require "alfred/command_line"
 Alfred::CommandLine.new

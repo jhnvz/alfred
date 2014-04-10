@@ -1,16 +1,16 @@
-## Alfred Rails
+## Alfred
 
-[![Gem Version](http://img.shields.io/gem/v/alfred_rails.svg)][gem]
-[![Build Status](http://img.shields.io/travis/jhnvz/alfred_rails.svg)][travis]
-[![Coverage Status](http://img.shields.io/coveralls/jhnvz/alfred_rails.svg)][coveralls]
-[![Code Climate](http://img.shields.io/codeclimate/github/jhnvz/alfred_rails.svg)][codeclimate]
-[![Dependency Status](http://img.shields.io/gemnasium/jhnvz/alfred_rails.svg)][gemnasium]
+[![Gem Version](http://img.shields.io/gem/v/alfred.svg)][gem]
+[![Build Status](http://img.shields.io/travis/jhnvz/alfred.svg)][travis]
+[![Coverage Status](http://img.shields.io/coveralls/jhnvz/alfred.svg)][coveralls]
+[![Code Climate](http://img.shields.io/codeclimate/github/jhnvz/alfred.svg)][codeclimate]
+[![Dependency Status](http://img.shields.io/gemnasium/jhnvz/alfred.svg)][gemnasium]
 
-[gem]: https://rubygems.org/gems/alfred_rails
-[travis]: http://travis-ci.org/jhnvz/alfred_rails
-[coveralls]: https://coveralls.io/r/jhnvz/alfred_rails
-[codeclimate]: https://codeclimate.com/github/jhnvz/alfred_rails
-[gemnasium]: https://gemnasium.com/jhnvz/alfred_rails
+[gem]: https://rubygems.org/gems/alfred
+[travis]: http://travis-ci.org/jhnvz/alfred
+[coveralls]: https://coveralls.io/r/jhnvz/alfred
+[codeclimate]: https://codeclimate.com/github/jhnvz/alfred
+[gemnasium]: https://gemnasium.com/jhnvz/alfred
 
 Serves controller action responses under several conditions.
 
@@ -38,7 +38,7 @@ Installation
 Defining scenario's
 ------------
 
-You can create empty definitions by running: 
+You can create empty definitions by running:
 ```
 $ rails g alfred:controller api/v1/posts
 ```
@@ -94,10 +94,10 @@ Alfred.configure do |config|
   config.setup do
     Apartment::Database.stub(:create).and_return(true)
   end
-  
+
   ## Mocking framework
   config.mock_with :rspec
-  
+
   ## Fixture path
   config.fixture_path 'spec/javascripts/fixtures'
 end

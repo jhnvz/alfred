@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'alfred_rails/command_line'
+require 'alfred/command_line'
 
 module Kernel
   def suppress_warnings

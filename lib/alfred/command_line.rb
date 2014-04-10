@@ -11,7 +11,7 @@ module Alfred
 
       load_rails!
 
-      require 'alfred_rails'
+      require 'alfred'
       ::Alfred.load!
 
       ::Alfred::Runner.new(@options[:files])

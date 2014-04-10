@@ -1,4 +1,4 @@
-require 'alfred_rails'
+require 'alfred'
 
 module Alfred
   module Generators
