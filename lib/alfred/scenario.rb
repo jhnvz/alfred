@@ -91,8 +91,9 @@ module Alfred
 
         ## Set response
         @response = @request.response
-
+      ensure
         ## Teardown mocks
+        @request.verify_mocks
         @request.teardown_mocks
       end
 

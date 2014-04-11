@@ -147,6 +147,18 @@ module Alfred
         defined?(RSpec)
       end
 
+      def mocha_defined?
+        defined?(Mocha)
+      end
+
+      def rr_defined?
+        defined?(RR)
+      end
+
+      def flexmock_defined?
+        defined?(Flexmock)
+      end
+
       ##
       # Loads defaults based on defined constants.
       # It guesses fixture_path and mocking framework.
@@ -161,8 +173,12 @@ module Alfred
         ## Guess mocking framework
         @config[:mock_with] = if rspec_defined?
           :rspec
-        else
-          :test_unit
+        elsif mocha_defined?
+          :mocha
+        elsif rr_defined?
+          :rr
+        elsif flexmock_defined?
+          :flexmock
         end
       end
 

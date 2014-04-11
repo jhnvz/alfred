@@ -29,6 +29,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'teaspoon'
   gem.add_development_dependency 'coffee-script'
 
+  gem.add_development_dependency "mocha",    "~> 0.13.0"
+  gem.add_development_dependency "rr",       "~> 1.0.4"
+  gem.add_development_dependency "flexmock", "~> 0.9.0"
+
   gem.add_dependency 'database_cleaner'
   gem.add_dependency 'ruby-progressbar'
   gem.add_dependency 'ammeter'

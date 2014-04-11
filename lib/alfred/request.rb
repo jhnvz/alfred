@@ -14,7 +14,7 @@ module Alfred
     #   end
     #
     def _setup(&block)
-      instance_eval(&block) if block_given?
+      instance_exec(&block) if block_given?
     end
 
     ##
