@@ -67,10 +67,6 @@ Alfred.define do
       }
     end
   end
-
-  scenario 'update post by manager' do
-    controller Api::V1::PostsController
-  end
 end
 ```
 
