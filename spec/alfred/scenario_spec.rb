@@ -21,4 +21,32 @@ describe Alfred::Scenario do
 
   end
 
+  describe '#run' do
+
+    before(:each) do
+      Alfred.configure_mock_framework!
+      scenario.controller = Api::V1::UsersController
+      scenario.method = :get
+      scenario.action = :index
+      scenario.params = { :format => :json }
+    end
+
+    it 'should perform scenario setup' do
+      scenario.setups << Proc.new { User.create(:name => 'John Doe Setup') }
+      scenario.run
+      User.last.name.should == 'John Doe Setup'
+    end
+
+    it 'should perform configuration setup' do
+      Alfred.configure do |c|
+        c.setup do
+           User.create(:name => 'John Doe Setup from config')
+        end
+      end
+      scenario.run
+      User.last.name.should == 'John Doe Setup from config'
+    end
+
+  end
+
 end

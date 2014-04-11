@@ -4,8 +4,6 @@ module Alfred
   module MockingAdapters
     module RR
 
-      def self.framework_name; :rr end
-
       include ::RR::Extensions::InstanceMethods
 
       def setup_mocks

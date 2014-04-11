@@ -33,8 +33,6 @@ module Alfred
   module MockingAdapters
     module Mocha
 
-      def self.framework_name; :mocha end
-
       begin
         include ::Mocha::API
       rescue NameError

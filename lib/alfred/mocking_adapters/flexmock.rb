@@ -9,8 +9,6 @@ module Alfred
 
       include ::FlexMock::MockContainer
 
-      def self.framework_name; :flexmock end
-
       def setup_mocks
         # No setup required
       end

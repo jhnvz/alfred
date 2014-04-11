@@ -2,8 +2,7 @@ module Alfred
   module MockingAdapters
     module RSpec
 
-      def self.framework_name; :rspec end
-
+      # :nocov:
       def setup_mocks
         ::RSpec::Mocks.setup(self)
       end
@@ -13,6 +12,7 @@ module Alfred
       ensure
         ::RSpec::Mocks.teardown
       end
+      # :nocov:
 
     end # RSpec
   end # MockingAdapters
