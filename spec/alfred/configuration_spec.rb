@@ -98,9 +98,11 @@ describe Alfred::Configuration do
       configuration.mock_adapter.should == Alfred::MockingAdapters::RSpec
 
       configuration.mock_with :rr
+      require 'alfred/mocking_adapters/rr'
       configuration.mock_adapter.should == Alfred::MockingAdapters::RR
 
       configuration.mock_with :flexmock
+      require 'alfred/mocking_adapters/flexmock'
       configuration.mock_adapter.should == Alfred::MockingAdapters::Flexmock
     end
 

@@ -79,20 +79,28 @@ module Alfred
     end
 
     ##
+    # Includes configured modules in Request.
+    #
+    def include_modules!
+      ## Include modules from configuration
+      Alfred.configuration.includes.each do |mod|
+        Request.send(:include, mod)
+      end
+    end
+
+    ##
     # Loads the configuration and scenario's.
     #
     def load!
       load_configuration!
       configure_mock_framework!
+      include_modules!
 
       ## Load scenario's
+      # :nocov:
       Dir["spec/alfreds/**/*.rb"].each { |f| load f }
       Dir["test/alfreds/**/*.rb"].each { |f| load f }
-
-      ## Include modules from configuration
-      Alfred.configuration.includes.each do |mod|
-        Request.send(:include, mod)
-      end
+      # :nocov:
     end
 
     ##
