@@ -92,7 +92,7 @@ module Alfred
       # Run scenarios defined in @scenarios
       #
       def run
-        Alfred.registry.clear!
+        #Alfred.registry.clear!
 
         start_message
 
@@ -108,7 +108,7 @@ module Alfred
           scenario.run # Run the scenario
           progress.increment # Increment progressbar
           message.queue(scenario.file.filename) # Add filename to the message queue
-          @scenarios.delete(scenario)
+          #@scenarios.delete(scenario)
         end
 
         message.queue('Alfred served the following fixtures:', :timestamp => true, :before => true)
