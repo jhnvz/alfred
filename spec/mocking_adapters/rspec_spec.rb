@@ -35,14 +35,16 @@ describe 'mocking adapter for rspec' do
         get :index, :format => :json
       end
       scenario 'teardown' do
+        setup { User.stub(:all).and_return(['other_stubbed_with_rspec']) }
         controller Api::V1::UsersController
         get :index, :format => :json
       end
     end
     Alfred.registry.all[0].run
     scenario = Alfred.registry.all[1]
+
     scenario.run
-    scenario.response.body.should == "[]"
+    scenario.response.body.should == "[\"other_stubbed_with_rspec\"]"
   end
 
 end

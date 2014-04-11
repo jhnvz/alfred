@@ -18,12 +18,12 @@ describe Alfred::Request do
 
   end
 
-  describe '#_setup' do
+  describe '#perform_setup' do
 
     it 'should execute the given block' do
-      request._setup { User.create(:name => 'John Doe') }
+      request.perform_setup { User.create(:name => 'John Doe') }
       User.count.should == 1
-      request._setup { User.create(:name => 'John Doe') }
+      request.perform_setup { User.create(:name => 'John Doe') }
       User.count.should == 2
     end
 

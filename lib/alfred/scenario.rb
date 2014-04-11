@@ -78,11 +78,11 @@ module Alfred
       def perform_setup
         ## Run global setup before example
         Alfred.configuration.setup.each do |setup|
-          @request._setup(&setup)
+          @request.perform_setup(&setup)
         end
 
         ## Run setup blocks for scenario
-        setups.each { |setup| @request._setup(&setup) }
+        setups.each { |setup| @request.perform_setup(&setup) }
       end
 
       ##
