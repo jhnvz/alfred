@@ -15,11 +15,9 @@ module Alfred
         # No setup required
       end
 
-      def verify_mocks
-        flexmock_verify
-      end
-
       def teardown_mocks
+        flexmock_verify
+      ensure
         flexmock_close
       end
 

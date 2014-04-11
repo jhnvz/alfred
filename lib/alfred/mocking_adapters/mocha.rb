@@ -40,11 +40,9 @@ module Alfred
         mocha_setup
       end
 
-      def verify_mocks
-        mocha_verify
-      end
-
       def teardown_mocks
+        mocha_verify
+      ensure
         mocha_teardown
       end
 

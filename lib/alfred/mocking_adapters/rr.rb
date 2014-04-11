@@ -12,11 +12,9 @@ module Alfred
         ::RR::Space.instance.reset
       end
 
-      def verify_mocks
-        ::RR::Space.instance.verify_doubles
-      end
-
       def teardown_mocks
+        ::RR::Space.instance.verify_doubles
+      ensure
         ::RR::Space.instance.reset
       end
 

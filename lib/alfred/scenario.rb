@@ -3,7 +3,7 @@ module Alfred
 
     ## Attributes
 
-    attr_accessor :name, :setups, :method, :controller, :action, :params, :identifier
+    attr_accessor :name, :setups, :method, :controller, :action, :params, :identifier, :response
 
     ##
     # Initialize a new Alfred scenario.
@@ -45,6 +45,9 @@ module Alfred
 
       ## Persist response to disk
       file.save
+    ensure
+      # Make sure to teardown mocks
+      @request.teardown_mocks
     end
 
     ##
@@ -64,9 +67,9 @@ module Alfred
 
         ## Setup request
         @request = Request.new(name)
+        @request.setup_mocks
         @request.set_controller(controller)
         @request.setup_controller_request_and_response
-        @request.setup_mocks
       end
 
       ##
@@ -91,10 +94,6 @@ module Alfred
 
         ## Set response
         @response = @request.response
-      ensure
-        ## Teardown mocks
-        @request.verify_mocks
-        @request.teardown_mocks
       end
 
   end # Scenario
