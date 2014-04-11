@@ -1,3 +1,8 @@
+# :nocov:
+
+# NOTE: No specs and coverage for Mocha since Mocha is automatically loaded in ActiveSupport::TestCase. It' ruins all rspec stubs for any_instance.
+# see: https://github.com/rails/rails/blob/701664b56b69827bfb46a5acfddf81d3a81b5d09/activesupport/lib/active_support/test_case.rb#L14
+
 # In order to support all versions of mocha, we have to jump through some
 # hoops here.
 #
@@ -49,3 +54,4 @@ module Alfred
     end # Mocha
   end # MockingAdapters
 end # Alfred
+# :nocov:
