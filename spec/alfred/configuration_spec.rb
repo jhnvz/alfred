@@ -24,14 +24,32 @@ describe Alfred::Configuration do
       configuration.fixture_path.should == "#{Rails.root}/test/javascripts/fixtures"
     end
 
-    it 'should set mocking framework to :rspec if Rspec::Mocks is defined' do
+    it 'should set mocking framework to :rspec if Rspec is defined' do
       configuration.mock_with.should == :rspec
     end
 
-    it 'should set mocking framework to :test_unit if Rspec::Mocks is not defined' do
+    it 'should set mocking framework to :mocha if Mocha is defined and Rspec is not' do
       Alfred::Configuration.any_instance.stub(:rspec_defined?).and_return(false)
+      Alfred::Configuration.any_instance.stub(:mocha_defined?).and_return(true)
       configuration = Alfred::Configuration.new
-      configuration.mock_with.should == :test_unit
+      configuration.mock_with.should == :mocha
+    end
+
+    it 'should set mocking framework to :ff if Mocha is defined and Mocha and Rspec are not' do
+      Alfred::Configuration.any_instance.stub(:rspec_defined?).and_return(false)
+      Alfred::Configuration.any_instance.stub(:mocha_defined?).and_return(false)
+      Alfred::Configuration.any_instance.stub(:rr_defined?).and_return(true)
+      configuration = Alfred::Configuration.new
+      configuration.mock_with.should == :rr
+    end
+
+    it 'should set mocking framework to :flexmock if Flexmock is defined and RR, Mocha and Rspec are not' do
+      Alfred::Configuration.any_instance.stub(:rspec_defined?).and_return(false)
+      Alfred::Configuration.any_instance.stub(:mocha_defined?).and_return(false)
+      Alfred::Configuration.any_instance.stub(:rr_defined?).and_return(false)
+      Alfred::Configuration.any_instance.stub(:flexmock_defined?).and_return(true)
+      configuration = Alfred::Configuration.new
+      configuration.mock_with.should == :flexmock
     end
 
   end
@@ -69,6 +87,23 @@ describe Alfred::Configuration do
     it 'should set test_path if argument is given' do
       configuration.test_path 'some/path'
       configuration.test_path.should == "some/path"
+    end
+
+  end
+
+  describe '#mock_adapter' do
+
+    it 'should return the correct mock adapter module' do
+      configuration.mock_with :rspec
+      configuration.mock_adapter.should == Alfred::MockingAdapters::RSpec
+
+      configuration.mock_with :rr
+      require 'alfred/mocking_adapters/rr'
+      configuration.mock_adapter.should == Alfred::MockingAdapters::RR
+
+      configuration.mock_with :flexmock
+      require 'alfred/mocking_adapters/flexmock'
+      configuration.mock_adapter.should == Alfred::MockingAdapters::Flexmock
     end
 
   end

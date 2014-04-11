@@ -9,12 +9,12 @@ module Alfred
     # === Example
     #
     #   request = Alfred::Request.new('test')
-    #   request.setup do
+    #   request.perform_setup do
     #     User.create(:name => 'John Doe')
     #   end
     #
-    def _setup(&block)
-      instance_eval(&block) if block_given?
+    def perform_setup(&block)
+      instance_exec(&block) if block_given?
     end
 
     ##

@@ -14,10 +14,10 @@ Alfred.configure do |config|
     ## Runs before every scenario
     DatabaseCleaner.clean
   end
-
+  <% if mock_with -%>
   ## Mocking framework
   config.mock_with :<%= mock_with %>
-
+  <% end -%>
   ## Fixture path
   config.fixture_path '<%= test_path %>/javascripts/fixtures'
 end

@@ -13,8 +13,9 @@ describe Alfred::Generators::InstallGenerator do
 
   describe 'conditions' do
 
+    let!(:stub_class) { Alfred::Generators::InstallGenerator.any_instance }
+
     before(:each) do
-      stub_class = Alfred::Generators::InstallGenerator.any_instance
       stub_class.stub(:mock_with).and_return(:rspec)
       stub_class.stub(:devise_defined?).and_return(false)
       stub_class.stub(:factory_girl_defined?).and_return(false)
@@ -22,15 +23,15 @@ describe Alfred::Generators::InstallGenerator do
 
     subject { File.read(file('spec/alfred_helper.rb')) }
 
-    it "sets mocking framework to rspec if defined" do
+    it "sets mocking framework if defined" do
       run_generator
       subject.should include('config.mock_with :rspec')
     end
 
-    it "sets mocking framework to test_unit if rspec is not defined" do
-      Alfred::Generators::InstallGenerator.any_instance.stub(:mock_with).and_return(:test_unit)
+    it "doesn't set mocking framework if not defined" do
+      stub_class.stub(:mock_with).and_return(nil)
       run_generator
-      subject.should include('config.mock_with :test_unit')
+      subject.should_not include('config.mock_with')
     end
 
     it 'should include Devise::TestHelpers if Devise is defined' do

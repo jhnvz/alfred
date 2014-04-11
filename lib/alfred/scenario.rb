@@ -3,7 +3,7 @@ module Alfred
 
     ## Attributes
 
-    attr_accessor :name, :setups, :method, :controller, :action, :params, :identifier
+    attr_accessor :name, :setups, :method, :controller, :action, :params, :identifier, :response
 
     ##
     # Initialize a new Alfred scenario.
@@ -45,6 +45,9 @@ module Alfred
 
       ## Persist response to disk
       file.save
+    ensure
+      # Make sure to teardown mocks
+      @request.teardown_mocks
     end
 
     ##
@@ -62,11 +65,9 @@ module Alfred
       def setup_request
         controller.send(:include, ::Rails.application.routes.url_helpers)
 
-        ## Initialize mocking framework
-        Alfred::Mock.new
-
         ## Setup request
         @request = Request.new(name)
+        @request.setup_mocks
         @request.set_controller(controller)
         @request.setup_controller_request_and_response
       end
@@ -77,11 +78,11 @@ module Alfred
       def perform_setup
         ## Run global setup before example
         Alfred.configuration.setup.each do |setup|
-          @request._setup(&setup)
+          @request.perform_setup(&setup)
         end
 
         ## Run setup blocks for scenario
-        setups.each { |setup| @request._setup(&setup) }
+        setups.each { |setup| @request.perform_setup(&setup) }
       end
 
       ##

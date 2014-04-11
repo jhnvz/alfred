@@ -67,10 +67,6 @@ Alfred.define do
       }
     end
   end
-
-  scenario 'update post by manager' do
-    controller Api::V1::PostsController
-  end
 end
 ```
 
@@ -81,6 +77,15 @@ spec/javascripts/fixtures/api/v1/posts/update/update_by_manager.js
 
 Configuration
 ------------
+
+There are just a few configuration options listed below:
+
+- `include` The modules you want to include in ActionController::TestCase.
+- `setup` Runs before every scenario.
+- `mock_with` Mocking framework of your choise.
+- `fixture_path` Where to save the fixtures.
+
+See example below:
 
 ```ruby
 # spec/alfred_helper.rb
@@ -97,13 +102,14 @@ Alfred.configure do |config|
 
   ## Mocking framework
   config.mock_with :rspec
+  config.mock_with :mocha
+  config.mock_with :rr
+  config.mock_with :flexmock
 
   ## Fixture path
   config.fixture_path 'spec/javascripts/fixtures'
 end
 ```
-
-Configuration instructions
 
 Javascript testing
 ------------

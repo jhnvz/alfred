@@ -1,7 +1,6 @@
 require 'alfred/version'
 require 'alfred/rails'
 require 'alfred/configuration'
-require 'alfred/mock'
 require 'alfred/registry'
 require 'alfred/definition'
 require 'alfred/scenario'
@@ -64,7 +63,7 @@ module Alfred
     end
 
     ##
-    # Loads the configuration
+    # Loads the configuration.
     #
     def load_configuration!
       Dir["spec/alfred_helper.rb"].each { |f| load f }
@@ -72,19 +71,36 @@ module Alfred
     end
 
     ##
-    # Loads the configuration and scenario's
+    # Configure mock framework.
     #
-    def load!
-      load_configuration!
+    def configure_mock_framework!
+      require "alfred/mocking_adapters/#{configuration.mock_with}"
+      Request.send(:include, configuration.mock_adapter)
+    end
 
-      ## Load scenario's
-      Dir["spec/alfreds/**/*.rb"].each { |f| load f }
-      Dir["test/alfreds/**/*.rb"].each { |f| load f }
-
+    ##
+    # Includes configured modules in Request.
+    #
+    def include_modules!
       ## Include modules from configuration
       Alfred.configuration.includes.each do |mod|
         Request.send(:include, mod)
       end
+    end
+
+    ##
+    # Loads the configuration and scenario's.
+    #
+    def load!
+      load_configuration!
+      configure_mock_framework!
+      include_modules!
+
+      ## Load scenario's
+      # :nocov:
+      Dir["spec/alfreds/**/*.rb"].each { |f| load f }
+      Dir["test/alfreds/**/*.rb"].each { |f| load f }
+      # :nocov:
     end
 
     ##

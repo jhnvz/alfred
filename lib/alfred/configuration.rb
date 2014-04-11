@@ -125,14 +125,52 @@ module Alfred
       config[:mock_with] = framework
     end
 
+    MOCKING_ADAPTERS = {
+      :rspec    => :RSpec,
+      :flexmock => :Flexmock,
+      :rr       => :RR,
+      :mocha    => :Mocha
+    }
+
+    ##
+    # Returns the mocking adapter module.
+    #
+    # === Example
+    #
+    #   configuration.mock_with :rspec
+    #   configuration.mock_adapter #=> Alfred::MockingAdapters::RSpec
+    #
+    # === Returns
+    #
+    #   [module (Module)] the adapter
+    #
+    def mock_adapter
+      adapter = MOCKING_ADAPTERS[mock_with]
+      "Alfred::MockingAdapters::#{adapter}".constantize
+    end
+
     private
 
       ##
-      # Wheter rspec is defined.
+      # Wheter module is defined.
       #
+      # :nocov:
       def rspec_defined?
         defined?(RSpec)
       end
+
+      def mocha_defined?
+        defined?(Mocha)
+      end
+
+      def rr_defined?
+        defined?(RR)
+      end
+
+      def flexmock_defined?
+        defined?(Flexmock)
+      end
+      # :nocov:
 
       ##
       # Loads defaults based on defined constants.
@@ -148,8 +186,12 @@ module Alfred
         ## Guess mocking framework
         @config[:mock_with] = if rspec_defined?
           :rspec
-        else
-          :test_unit
+        elsif mocha_defined?
+          :mocha
+        elsif rr_defined?
+          :rr
+        elsif flexmock_defined?
+          :flexmock
         end
       end
 
