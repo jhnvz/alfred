@@ -75,7 +75,7 @@ module Alfred
     #
     def configure_mock_framework!
       require "alfred/mocking_adapters/#{configuration.mock_with}"
-      Request.send(:include, configuration.mock_framework)
+      Request.send(:include, configuration.mock_adapter)
     end
 
     ##

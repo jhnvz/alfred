@@ -91,6 +91,21 @@ describe Alfred::Configuration do
 
   end
 
+  describe '#mock_adapter' do
+
+    it 'should return the correct mock adapter module' do
+      configuration.mock_with :rspec
+      configuration.mock_adapter.should == Alfred::MockingAdapters::RSpec
+
+      configuration.mock_with :rr
+      configuration.mock_adapter.should == Alfred::MockingAdapters::RR
+
+      configuration.mock_with :flexmock
+      configuration.mock_adapter.should == Alfred::MockingAdapters::Flexmock
+    end
+
+  end
+
   describe '#include' do
 
     it 'should add modules to include' do
