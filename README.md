@@ -6,7 +6,7 @@
 [![Code Climate](http://img.shields.io/codeclimate/github/jhnvz/alfred.svg)][codeclimate]
 [![Dependency Status](http://img.shields.io/gemnasium/jhnvz/alfred.svg)][gemnasium]
 
-[gem]: https://rubygems.org/gems/alfred
+[gem]: https://rubygems.org/gems/alfred_rails
 [travis]: http://travis-ci.org/jhnvz/alfred
 [coveralls]: https://coveralls.io/r/jhnvz/alfred
 [codeclimate]: https://codeclimate.com/github/jhnvz/alfred
