@@ -1,13 +1,24 @@
 module Alfred
+  ##
+  # Responsible for generating JS fixture.
+  #
   class FixtureFile
 
     attr_reader :response, :controller_name, :action, :name
 
+    ##
+    # Returns a new instance of FixtureFile.
+    #
+    # @param response [Object] response object
+    # @param controller_name [String] the name of the controller
+    # @param action [Symbol] the controller action
+    # @param name [String] the name of the scenario
+    #
     def initialize(response, controller_name, action, name)
-      @response = response
+      @response        = response
       @controller_name = controller_name
-      @action = action
-      @name = name
+      @action          = action
+      @name            = name
     end
 
     ##

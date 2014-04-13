@@ -1,15 +1,14 @@
 module Alfred
+  ##
+  # Definition logic.
+  #
   module Definition
 
     ##
     # Defines a new Alfred scenario.
     #
-    # === Params
-    #
-    # [block (Block)] the block to perform
-    #
-    # === Examples
-    #
+    # @param block [Proc] the block to perform
+    # @example
     #   Alfred.define do
     #     setup do
     #       sign_in :user, create(:user)
@@ -30,10 +29,6 @@ module Alfred
     #         }
     #       end
     #     end
-    #
-    #     scenario 'update post by manager' do
-    #       controller Api::V1::PostsController
-    #     end
     #   end
     #
     def define(&block)
@@ -48,10 +43,8 @@ module Alfred
       ##
       # Define a new scenario.
       #
-      # === Params
-      #
-      # [name (Symbol)] the name of the scenario
-      # [block (Block)] the block to perform
+      # @param name [Symbol] the name of the scenario
+      # @param block [Proc] the block to perform on scenario dsl
       #
       def scenario(name, &block)
         scenario            = Scenario.new(name)
@@ -68,10 +61,8 @@ module Alfred
       ##
       # Define the controller.
       #
-      # === Params
-      #
-      # [controller (ActionController::Base)] the controller
-      # [block (Block)] the block to perform
+      # @param controller [ActionController::Base] the controller
+      # @param block [Proc] the block to perform
       #
       def controller(controller, &block)
         Thread.current[:controller] = controller
@@ -82,20 +73,14 @@ module Alfred
       ##
       # Define setup for every scenario.
       #
-      # === Params
-      #
-      # [block (Block)] the block to setup on Alfred Scenario
-      #
-      # === Examples
-      #
+      # @param block [Proc] the block to setup on Alfred Scenario
+      # @example
       #   Alfred.define do
       #     setup do
       #       SomeController.stub(:current_user).and_return(create(:user))
       #     end
       #
-      #     scenario 'alfred is awesome' do
-      #
-      #     end
+      #     scenario 'alfred is awesome'
       #   end
       #
       def setup(&block)
@@ -105,12 +90,8 @@ module Alfred
       ##
       # Runs the code inside a block.
       #
-      # === Params
-      #
-      # [block (Block)] the block to run
-      #
-      # === Examples
-      #
+      # @param block [Proc] the block to run
+      # @example
       #   new.run do
       #     setup do
       #       User.create(:name => 'John Doe')

@@ -1,4 +1,7 @@
 module Alfred
+  ##
+  # Holds global configuration.
+  #
   class Configuration
 
     attr_accessor :config
@@ -15,13 +18,10 @@ module Alfred
     ##
     # Set or get setup for each scenario.
     #
-    # === Params
-    #
-    # [block (Block)] the block to perform
-    #
-    # === Example
-    #
-    #   setup
+    # @param block [Proc] The block to perform
+    # @return [Array<Proc>] blocks to perform
+    # @example
+    #   setup do
     #     User.create(:name => 'John Doe')
     #   end
     #
@@ -29,7 +29,7 @@ module Alfred
     #
     # === Returns
     #
-    # [setup (Array)] array with blocks
+    # [setup (Array<Proc)] array with blocks
     #
     def setup(&block)
       return @config[:setup] unless block_given?
@@ -37,14 +37,10 @@ module Alfred
     end
 
     ##
-    # Include modules.
+    # Modules to include.
     #
-    # === Params
-    #
-    # [mod (Module)] the module to include
-    #
-    # === Example
-    #
+    # @param mod [Module] the module to include
+    # @example
     #   include Devise::TestHelpers
     #
     def include(mod)
@@ -54,9 +50,7 @@ module Alfred
     ##
     # Returns array of the modules to include.
     #
-    # === Returns
-    #
-    # [modules (Array)] the modules to include
+    # @return (Array<Module>) the modules to include
     #
     def includes
       @config[:includes]
@@ -65,18 +59,11 @@ module Alfred
     ##
     # Set or get the fixture path.
     #
-    # === Params
-    #
-    # [path (String)] the path to set
-    #
-    # === Examples
-    #
+    # @param path [String] the fixture path
+    # @return [String] the fixture path
+    # @example
     #   fixture_path('spec/javascript/fixtures')
     #   fixture_path #=> 'spec/javascript/fixtures'
-    #
-    # === Returns
-    #
-    # [path (String)] the fixture path
     #
     def fixture_path(path=nil)
       return config[:fixture_path] if path.nil?
@@ -86,18 +73,11 @@ module Alfred
     ##
     # Set or get the test path.
     #
-    # === Params
-    #
-    # [path (String)] the path to set
-    #
-    # === Examples
-    #
+    # @param path [String] the test path
+    # @return [String] the test path
+    # @example
     #   test_path('spec')
     #   test_path #=> 'spec'
-    #
-    # === Returns
-    #
-    # [path (String)] the fixture path
     #
     def test_path(path=nil)
       return config[:test_path] if path.nil?
@@ -107,18 +87,11 @@ module Alfred
     ##
     # Set or get the mocking framework.
     #
-    # === Params
-    #
-    # [framework (Symbol)] the mocking framework
-    #
-    # === Examples
-    #
+    # @param framework [Symbol] the mocking framework
+    # @return [Symbol] the mocking framework
+    # @example
     #   mock_with :rspec
     #   mock_with #=> :rspec
-    #
-    # === Returns
-    #
-    # [framework (Symbol)] mocking framework
     #
     def mock_with(framework=nil)
       return config[:mock_with] if framework.nil?
@@ -135,14 +108,10 @@ module Alfred
     ##
     # Returns the mocking adapter module.
     #
-    # === Example
-    #
+    # @return [Module] the adapter
+    # @example
     #   configuration.mock_with :rspec
     #   configuration.mock_adapter #=> Alfred::MockingAdapters::RSpec
-    #
-    # === Returns
-    #
-    #   [module (Module)] the adapter
     #
     def mock_adapter
       adapter = MOCKING_ADAPTERS[mock_with]

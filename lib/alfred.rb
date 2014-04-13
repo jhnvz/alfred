@@ -21,9 +21,7 @@ module Alfred
     ##
     # Builds registry or returns existing registry.
     #
-    # === Returns
-    #
-    # [registry (Alfred::Registry)] the registry
+    # @return [Alfred::Registry)] the registry instance
     #
     def registry
       @registry ||= Registry.new
@@ -32,9 +30,7 @@ module Alfred
     ##
     # Builds configuration or returns existing configuration.
     #
-    # === Returns
-    #
-    # [configuration (Alfred::Configuration)] the configuration instance
+    # @return [Alfred::Configuration] the configuration instance
     #
     def configuration
       @configuration ||= Configuration.new
@@ -43,8 +39,7 @@ module Alfred
     ##
     # Configure Alfred.
     #
-    # === Example
-    #
+    # @example
     #   configure do |c|
     #     c.include FactoryGirl::Syntax::Methods
     #     c.include Devise::TestHelpers

@@ -1,6 +1,9 @@
 require 'ruby-progressbar'
 
 module Alfred
+  ##
+  # Responsible for running selected or all scenario's.
+  #
   class Runner
 
     attr_accessor :files, :controllers, :matches, :scenarios
@@ -9,19 +12,12 @@ module Alfred
     # Initialize a new runner and find and run scenario's.
     # Runs al scenarios if files are empty.
     #
-    # === Params
-    #
-    # [files (Array)] the files to lookup
-    #
-    # === Example
-    #
-    # Run specific scenario's:
-    #
+    # @param files [Array<String>] files to lookup
+    # @example Run specific scenario's:
     #   Runner.new(['spec/alfreds/some_controller.rb'])
     #   #=> Will run scenario's for some_controller
     #
-    # Run all scenario's:
-    #
+    # @example Run all scenario's:
     #   Runner.new
     #   #=> Will run all scenario's
     #

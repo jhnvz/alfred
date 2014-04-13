@@ -1,19 +1,16 @@
 module Alfred
+  ##
+  # Holds all information about a scenario.
+  #
   class Scenario
-
-    ## Attributes
 
     attr_accessor :name, :setups, :method, :controller, :action, :params, :identifier, :response
 
     ##
     # Initialize a new Alfred scenario.
     #
-    # === Params
-    #
-    # [name (String)] name of the scenario
-    #
-    # === Example
-    #
+    # @param name [String] the name of the scenario
+    # @example
     #   Scenario.new('admin permissions')
     #
     def initialize(name)
@@ -22,10 +19,10 @@ module Alfred
     end
 
     ##
-    # Returns the controller name based on controller.
+    # Returns the controller name based on controller class name.
     #
-    # === Examples
-    #
+    # @return [String] the name of the controller
+    # @example
     #   scenario = Scenario.new('test')
     #   scenario.controller = Api::V1::UserController
     #
@@ -52,6 +49,8 @@ module Alfred
 
     ##
     # Initialize or return existing file instance.
+    #
+    # @return [Alfred::FixtureFile] instance of FixtureFile
     #
     def file
       @file ||= FixtureFile.new(@response, controller_name, action, name)

@@ -13,18 +13,15 @@ module Alfred
       # Define method for checking presence of a module.
       # Will also include module in config.
       #
-      # === Examples
-      #
+      # @example
       #   INCLUDES = [{ :class_name => 'Devise', :include => 'Devise::TestHelpers' }]
       #
-      # Will define the following method:
-      #
+      #   # Will define the following method:
       #   def devise_enabled?
       #     defined?(Devise)
       #   end
       #
-      # Adds the following code to config:
-      #
+      #   # Adds the following code to config:
       #   config.include Devise::TestHelpers
       #
       # === Current value:

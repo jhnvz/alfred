@@ -1,13 +1,15 @@
 module Alfred
+  ##
+  # Instance of ActionController::TestCase.
+  # Used to get the actual controller action response.
+  #
   class Request < ActionController::TestCase
 
     ##
     # Runs setup block before it runs the controller action.
     #
-    # [block (Block)] the block to execute
-    #
-    # === Example
-    #
+    # @param block [Proc] the block to execute
+    # @example
     #   request = Alfred::Request.new('test')
     #   request.perform_setup do
     #     User.create(:name => 'John Doe')
@@ -20,12 +22,8 @@ module Alfred
     ##
     # Sets the controller instance to test.
     #
-    # === Params
-    #
-    # [controller_instance (ActionController::Base#new)] the controller to test
-    #
-    # === Example
-    #
+    # @param controller [ActionController::Base] the controller
+    # @example
     #   request = Alfred::Request.new('test')
     #   request.set_controller(Api::V1::UsersController)
     #

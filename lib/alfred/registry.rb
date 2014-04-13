@@ -1,7 +1,10 @@
 module Alfred
+  ##
+  # Holds all scenario's to run per controller.
+  #
   class Registry
 
-    attr_accessor :items
+    attr_reader :items
 
     def initialize
       @items = {}
@@ -10,58 +13,40 @@ module Alfred
     ##
     # Register a new Scenario.
     #
-    # === Params
+    # @param controller_name [String] the name of the controller
+    # @item [Alfred::Scenario] the scenario instance
+    # @example
+    #   Alfred.registry.register('api/v1/posts_controller', Alfred::Scenario.new)
     #
-    # [identifier (String)] the scenario identifier
-    # [item (Scenario)] the scenario object
-    #
-    # === Example
-    #
-    #   Alfred.registry.register('api/v1/posts_controller', #Alfred::Scenario:0x007f933a6aaa98>)
-    #
-    def register(identifier, item)
-      @items[identifier] ||= []
-      @items[identifier] << item
+    def register(controller_name, item)
+      @items[controller_name] ||= []
+      @items[controller_name] << item
     end
 
     ##
-    # Check if controller and action are already registered.
+    # Check if controller is already registered.
     #
-    # === Params
+    # @param controller_name [String] the name of the controller
+    # @return [true|false] whether there are examples for controller
+    # @example
+    #   Alred.registry.registered?('api/v1/posts_controller')
     #
-    # [identifier (String)] the scenario identifier
-    #
-    # === Example
-    #
-    #   Scenario.registry.registered?('api/v1/posts_controller')
-    #
-    # === Returns
-    #
-    # [found (TrueClass|FalseClass)] wheter found or not
-    #
-    def registered?(identifier)
-      @items.key?(identifier)
+    def registered?(controller_name)
+      @items.key?(controller_name)
     end
 
     ##
-    # Finds a Scenario by its identifier.
+    # Finds a Scenario by controller_name.
     #
-    # === Params
-    #
-    # [identifier (String)] unique identifier
-    #
-    # === Examples
-    #
+    # @param controller_name [String] the name to lookup
+    # @return [Array<Alfred::Scenario>] all scenario's for controller
+    # @example
     #   Alfred.registry.find("api/v1/sessions_controller")
     #   #=> [#<Alfred::Scenario:0x007f933a6aaa98>]
     #
-    # === Returns
-    #
-    # [items (Array)] returns all the items for identifier
-    #
-    def find(identifier)
-      if registered?(identifier)
-        @items[identifier]
+    def find(controller_name)
+      if registered?(controller_name)
+        @items[controller_name]
       end
     end
     alias :[] :find
@@ -69,12 +54,14 @@ module Alfred
     ##
     # Returns all the items.
     #
+    # @return [Array<Alfred::Scenario>] all scenario's
+    #
     def all
       @items.values.flatten
     end
 
     ##
-    # Removes al items from registry.
+    # Removes all items from registry.
     #
     def clear!
       @items.clear

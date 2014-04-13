@@ -1,22 +1,27 @@
 module Alfred
+  ##
+  # DSL to setup all scenario information.
+  #
   class ScenarioDSL
 
+    # @return [Alfred::Scenario] the scenario instance
     attr_accessor :scenario
 
+    ##
+    # Initialize dsl for existing scenario object.
+    #
+    # @param scenario [Alfred::Scenario] the scenario
+    #
     def initialize(scenario)
       @scenario = scenario
     end
 
     ##
-    # Apply setup to Scenario instance.
+    # Store setup blocks in Scenario instance.
     #
-    # === Params
-    #
-    # [block (Block)] the block to perform.
-    #
-    # === Example
-    #
-    #   setup do
+    # @param block [Proc] the block to perform
+    # @example
+    #   dsl.setup do
     #     User.create(:name => 'John Doe')
     #   end
     #
@@ -27,23 +32,16 @@ module Alfred
     ##
     # Set the controller to test.
     #
-    # === Params
-    #
-    # [controller (ActionController::Base)] the controller to test
-    #
-    # === Example
-    #
-    #   controller(ActionController::Base)
+    # @param controller [ActionController::Base] the controller to test
     #
     def controller(controller)
       scenario.controller = controller
     end
 
     ##
-    # Respond to request methods
+    # Respond to request methods.
     #
-    # === Examples
-    #
+    # @example
     #   post :create, :post => { :title => 'Some title' }
     #   get  :show, :id => 1
     #
@@ -63,14 +61,10 @@ module Alfred
     ##
     # Setup request data.
     #
-    # === Params
-    #
-    # [method (Sym)] request method
-    # [action (Sym)] controller and action
-    # [params (Hash)] request params
-    #
-    # === Example
-    #
+    # @param method [Symbol] the request method
+    # @param action [Symbol] the controller action
+    # @param params [Hash] optional params hash
+    # @example
     #   setup_request(:get, :show, :id => 1)
     #
     def setup_request_data(method, action, params={})

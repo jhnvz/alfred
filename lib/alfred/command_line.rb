@@ -3,6 +3,9 @@ ENV["RAILS_ENV"] ||= 'test'
 require "optparse"
 
 module Alfred
+  ##
+  # Run Alfred as a binary.
+  #
   class CommandLine
 
     def initialize
@@ -32,9 +35,7 @@ module Alfred
       ##
       # Parses the options and returns the files if present.
       #
-      # === Returns
-      #
-      # [files (Array)] the files to run
+      # @return [Array] the files to run
       #
       def parse_options
         options = {}
@@ -49,7 +50,7 @@ module Alfred
       end
 
       ##
-      # Load Rails environment and Alfred.
+      # Load Rails environment.
       #
       # :nocov:
       def load_rails!
