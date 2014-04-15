@@ -31,9 +31,18 @@ Resources
 Installation
 ------------
 
-1. Add `gem 'alfred_rails'` to your Gemfile (inside test group).
-2. Run `bundle install`.
-3. Run `rails g alfred:install`.
+Add the gem to your Gemfile (inside test group).
+```ruby
+gem 'alfred_rails', :require => 'alfred'
+```
+Install bundle by running:
+```
+$ bundle install
+```
+Create the Alfred configuration helper by running:
+```
+$ rails g alfred:install
+```
 
 Defining scenario's
 ------------
