@@ -1,10 +1,10 @@
 ## Alfred
 
-[![Gem Version](http://img.shields.io/gem/v/alfred_rails.svg)][gem]
-[![Build Status](http://img.shields.io/travis/jhnvz/alfred.svg)][travis]
-[![Coverage Status](http://img.shields.io/coveralls/jhnvz/alfred.svg)][coveralls]
-[![Code Climate](http://img.shields.io/codeclimate/github/jhnvz/alfred.svg)][codeclimate]
-[![Dependency Status](http://img.shields.io/gemnasium/jhnvz/alfred.svg)][gemnasium]
+[![Gem Version](http://img.shields.io/gem/v/alfred_rails.svg?style=flat)][gem]
+[![Build Status](http://img.shields.io/travis/jhnvz/alfred.svg?style=flat)][travis]
+[![Coverage Status](http://img.shields.io/coveralls/jhnvz/alfred.svg?style=flat)][coveralls]
+[![Code Climate](http://img.shields.io/codeclimate/github/jhnvz/alfred.svg?style=flat)][codeclimate]
+[![Dependency Status](http://img.shields.io/gemnasium/jhnvz/alfred.svg?style=flat)][gemnasium]
 
 [gem]: https://rubygems.org/gems/alfred_rails
 [travis]: http://travis-ci.org/jhnvz/alfred
